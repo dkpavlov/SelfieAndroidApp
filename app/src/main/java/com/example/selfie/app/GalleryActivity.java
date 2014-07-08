@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class GalleryActivity extends Activity implements MenuFragment.OnFragmentInteractionListener{
 
     public static final String SELFIE_ID_KAY = "SELFIE_ID";
-    public static final String WEB_SERVICE = "http://10.20.2.41:8080/RESTfulExample";
+    public static final String WEB_SERVICE = "http://192.168.2.3:8080/RESTfulExample";
     public static final String CURRENT_PICTURE_ID = "PICTURE_ID";
     public static final String PICTURES_ID_LIST_KAY = "PICTURES_ID_LIST";
 

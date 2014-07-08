@@ -19,5 +19,6 @@
     <string name="switch_gender">Switch Gender</string>
     <string name="title_activity_favorite">FavoriteActivity</string>
     <string name="title_activity_preview_favorite">PreviewFavoriteActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
 
 </resources>

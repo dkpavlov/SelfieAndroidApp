@@ -38,23 +38,6 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        textView = (TextView) findViewById(R.id.hello_message);
-        girlsButton = (Button) findViewById(R.id.girls_button);
-        boysButton = (Button) findViewById(R.id.boys_button);
-
-        Typeface exoTf = Typeface.createFromAsset(getAssets(), "fonts/Exo2-BoldItalic.ttf");
-
-        textView.setTypeface(exoTf);
-        textView.setTextColor(Color.parseColor("#BB3628"));
-
-        girlsButton.setTypeface(exoTf);
-        girlsButton.setBackgroundColor(Color.parseColor("#18A432"));
-        girlsButton.setTextColor(Color.WHITE);
-
-        boysButton.setTypeface(exoTf);
-        boysButton.setBackgroundColor(Color.parseColor("#18A432"));
-        boysButton.setTextColor(Color.WHITE);
     }
 
     public void onButtonClick(View v){
