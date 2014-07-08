@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Selfie</string>
+    <string name="hello_string">I am looking for</string>
+    <string name="girls">Girls</string>
+    <string name="boys">Boys</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_gallery">GalleryActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_comment">CommentActivity</string>
+    <string name="comment_button_send">Send</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu"><b>Menu</b></string>
+    <string name="nsfw">NSFW</string>
+    <string name="get_new">Ge New</string>
+    <string name="my_favorite">My Favorite</string>
+    <string name="switch_gender">Switch Gender</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
+    <string name="title_activity_preview_favorite">PreviewFavoriteActivity</string>
+
+</resources>
