@@ -2,14 +2,14 @@
 <pre-dex-items>
 
     <item
-        dex="D:\gitWork\SelfieAndroidApp\app\build\intermediates\pre-dexed\debug\support-v4-19.1.0-5d69d0a504acaae4b8f97ce9c6bb95ec8c4dbd71.jar"
-        jar="D:\AndroidDev\adt-x86_64-20140321\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
+        dex="/Users/dkpavlov/Desktop/Android/SelfieGit/SelfieAndroidApp/app/build/intermediates/pre-dexed/debug/support-v4-19.1.0-d04956b0d90e310e4d29b1bed5cefbb09141fdba.jar"
+        jar="/Users/dkpavlov/Desktop/Android/adt-bundle-mac-x86_64-20140702/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
     <item
-        dex="D:\gitWork\SelfieAndroidApp\app\build\intermediates\pre-dexed\debug\classes-532ff0daadc9adc040978510554d687ca34c6e52.jar"
-        jar="D:\gitWork\SelfieAndroidApp\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
+        dex="/Users/dkpavlov/Desktop/Android/SelfieGit/SelfieAndroidApp/app/build/intermediates/pre-dexed/debug/classes-3f4a474abc8f361497d7be6738940107c9f13163.jar"
+        jar="/Users/dkpavlov/Desktop/Android/SelfieGit/SelfieAndroidApp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
