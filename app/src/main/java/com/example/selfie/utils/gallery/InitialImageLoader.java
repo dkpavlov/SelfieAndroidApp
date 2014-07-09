@@ -47,8 +47,6 @@ public class InitialImageLoader extends AsyncTask<String, Void, BitmapAndString>
         } catch (IOException e) {
             Log.e(LOG_TAG, e.getMessage());
         }
-
-
         return bitmapAndString;
     }
 

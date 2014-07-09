@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class GalleryActivity extends Activity implements MenuFragment.OnFragmentInteractionListener{
 
     public static final String SELFIE_ID_KAY = "SELFIE_ID";
-    public static final String WEB_SERVICE = "http://192.168.2.3:8080/RESTfulExample";
+    public static final String WEB_SERVICE = "http://194.12.246.68/srest";
     public static final String CURRENT_PICTURE_ID = "PICTURE_ID";
     public static final String PICTURES_ID_LIST_KAY = "PICTURES_ID_LIST";
 
@@ -156,7 +156,6 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
     /* Fragment Buttons */
 
     public void onGenderButtonClick(View v){
-        v.setBackgroundColor(Color.parseColor("#6699FF"));
         Intent intent = new Intent(this, GalleryActivity.class);
         if(GENDER.equals("MALE")){
             intent.putExtra(HomeActivity.PICTURES_TYPE_KEY, "FEMALE");
@@ -166,42 +165,35 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
         intent.putExtra(HomeActivity.TYPE_OF_CONTENT_KEY, TYPE);
         intent.putExtra(HomeActivity.ORDER_TYPE_KEY, ORDER);
         startActivity(intent);
-        v.setBackgroundColor(Color.parseColor("#222219"));
     }
 
     public void nsfwButtonClick(View v){
-        v.setBackgroundColor(Color.parseColor("#6699FF"));
         Intent intent = new Intent(this, GalleryActivity.class);
-        intent.putExtra(HomeActivity.PICTURES_TYPE_KEY, GENDER);
-        intent.putExtra(HomeActivity.ORDER_TYPE_KEY, ORDER);
         if(TYPE.equals(HomeActivity.NSFW)){
             intent.putExtra(HomeActivity.TYPE_OF_CONTENT_KEY, HomeActivity.SFW);
         } else {
             intent.putExtra(HomeActivity.TYPE_OF_CONTENT_KEY, HomeActivity.NSFW);
         }
+        intent.putExtra(HomeActivity.PICTURES_TYPE_KEY, GENDER);
+        intent.putExtra(HomeActivity.ORDER_TYPE_KEY, ORDER);
         startActivity(intent);
-        v.setBackgroundColor(Color.parseColor("#222219"));
     }
 
     public void orderButtonClick(View v){
-        v.setBackgroundColor(Color.parseColor("#6699FF"));
         Intent intent = new Intent(this, GalleryActivity.class);
-        intent.putExtra(HomeActivity.PICTURES_TYPE_KEY, GENDER);
-        intent.putExtra(HomeActivity.TYPE_OF_CONTENT_KEY, TYPE);
         if(ORDER.equals(Order.ORDERED)){
             intent.putExtra(HomeActivity.ORDER_TYPE_KEY, Order.RANDOMIZED.toString());
         } else {
             intent.putExtra(HomeActivity.ORDER_TYPE_KEY, Order.ORDERED.toString());
         }
+        intent.putExtra(HomeActivity.PICTURES_TYPE_KEY, GENDER);
+        intent.putExtra(HomeActivity.TYPE_OF_CONTENT_KEY, TYPE);
         startActivity(intent);
-        v.setBackgroundColor(Color.parseColor("#222219"));
     }
 
     public void openFavoritesButtonClick(View v){
-        v.setBackgroundColor(Color.parseColor("#6699FF"));
         Intent intent = new Intent(this, FavoriteActivity.class);
         startActivity(intent);
-        v.setBackgroundColor(Color.parseColor("#222219"));
     }
 
     @Override
