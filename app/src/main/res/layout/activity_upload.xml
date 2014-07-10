@@ -1,0 +1,247 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.selfie.app.UploadActivity">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:id="@+id/menu_bar"
+        android:background="#e9525a">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/back_button"
+            android:src="@drawable/back"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="10dp"
+            android:background="@null"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/menu_button"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/menu_trans"
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="upload photo"
+            android:textColor="#FFFFFF"
+            android:textSize="26dp"
+            android:layout_centerInParent="true"
+            android:id="@+id/textView" />
+    </RelativeLayout>
+
+
+
+    <!--<Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick"
+        android:id="@+id/pick_button"
+        android:onClick="onButtonClick"
+        android:layout_marginBottom="76dp"
+        android:layout_above="@+id/send_button"
+        android:layout_centerHorizontal="true" />-->
+
+
+
+    <RelativeLayout
+        android:layout_width="140dp"
+        android:layout_height="120dp"
+        android:layout_below="@+id/menu_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:id="@+id/relativeLayout"
+        >
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/preview_selfie"
+            android:scaleType="centerCrop"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton"
+            android:background="@null"
+            android:src="@drawable/delete"
+            android:layout_alignTop="@+id/preview_selfie"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:background="@drawable/rounded_layout_bg"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignRight="@+id/relativeLayout"
+        android:layout_alignEnd="@+id/relativeLayout"
+        android:id="@+id/pick_button"
+        android:clickable="true"
+        android:onClick="onButtonClick">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:background="@null"
+            android:src="@drawable/uploade"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="12dp"
+            android:text="UPLOAD PHOTO"
+            android:layout_marginRight="10dp"
+            android:id="@+id/textView2"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="I AM"
+        android:id="@+id/textView3"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="150dp"
+        android:layout_height="130dp"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:layout_below="@+id/menu_bar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:id="@+id/woman_gender">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/woman_gender_image"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/woman_small"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/woman_gender_check"
+                    android:background="@null"
+                    android:src="@drawable/delete"
+                    android:layout_alignTop="@+id/woman_gender_image"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:layout_below="@+id/menu_bar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:id="@+id/men_gender">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/men_gender_image"
+                    android:scaleType="centerCrop"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/men_small"
+                    android:layout_marginTop="20dp" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/men_gender_check"
+                    android:background="@null"
+                    android:src="@drawable/delete"
+                    android:layout_alignTop="@+id/men_gender_image"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="E-mail verification"
+        android:layout_above="@+id/validate_email"
+        android:layout_marginBottom="10dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/validate_email_text" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/validate_email"
+        android:layout_above="@+id/send_button"
+        android:layout_marginBottom="10dp"
+        android:hint="Enter your email address"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UPLOAD PHOTO"
+        android:textColor="#FFFFFF"
+        android:textSize="16dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:id="@+id/send_button"
+        android:background="@drawable/round_button_blue"
+        android:onClick="onButtonClick"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+
+
+
+</RelativeLayout>

@@ -198,7 +198,7 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
                 intent = new Intent(this, FavoriteActivity.class);
                 break;
             case R.id.my_profile:
-                intent = new Intent(this, ProfileActivity.class);
+                intent = new Intent(this, MyProfileActivity.class);
                 break;
         }
         startActivity(intent);

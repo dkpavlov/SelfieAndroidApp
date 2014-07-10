@@ -5,7 +5,6 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileActivity extends Activity {
+public class UploadActivity extends Activity {
 
     ImageView imageView;
     private Uri selectedImageUri;
@@ -34,7 +33,7 @@ public class ProfileActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_upload);
         imageView = (ImageView) findViewById(R.id.preview_selfie);
     }
 

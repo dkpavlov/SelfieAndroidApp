@@ -23,5 +23,7 @@
     <string name="favorite_title">my favourite photos</string>
     <string name="my_profile">My profile</string>
     <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_my_profile">my profile</string>
+    <string name="title_activity_my_uploads">MyUploadsActivity</string>
 
 </resources>
