@@ -21,5 +21,7 @@
     <string name="title_activity_preview_favorite">PreviewFavoriteActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="favorite_title">my favourite photos</string>
+    <string name="my_profile">My profile</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 
 </resources>

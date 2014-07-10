@@ -32,17 +32,7 @@ public class FavoriteActivity extends Activity {
 
         List<Selfie> selfieList = dataSource.getAllSelfis();
         gridView = (GridView) findViewById(R.id.favorite_grid_view);
-        gridView.setAdapter(new ImageAdapter(selfieList, this));
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-
-                Intent i = new Intent(getApplicationContext(), PreviewFavoriteActivity.class);
-                i.putExtra("id", id);
-                startActivity(i);
-            }
-        });
+        gridView.setAdapter(new ImageAdapter(selfieList, this, dataSource));
     }
 
     @Override

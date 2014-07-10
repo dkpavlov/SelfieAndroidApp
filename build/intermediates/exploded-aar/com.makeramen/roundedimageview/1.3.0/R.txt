@@ -1,0 +1,12 @@
+int attr border_color 0x7f010002
+int attr border_width 0x7f010001
+int attr corner_radius 0x7f010000
+int attr mutate_background 0x7f010003
+int attr oval 0x7f010004
+int[] styleable RoundedImageView { 0x0101011d, 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004 }
+int styleable RoundedImageView_android_scaleType 0
+int styleable RoundedImageView_border_color 3
+int styleable RoundedImageView_border_width 2
+int styleable RoundedImageView_corner_radius 1
+int styleable RoundedImageView_mutate_background 4
+int styleable RoundedImageView_oval 5

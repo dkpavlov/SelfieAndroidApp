@@ -74,6 +74,32 @@ public class MyHttpClient  {
         }
     }
 
+    public static int makeHttpPost(String url,
+                                      Map<String, String> headers,
+                                      Map<String, String> values){
+
+        HttpResponse httpResponse;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(url);
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(values.size());
+
+        for(String key: headers.keySet()){
+            httpPost.setHeader(key, headers.get(key));
+        }
+        for(String key: values.keySet()){
+            nameValuePairs.add(new BasicNameValuePair(key, values.get(key)));
+        }
+        try{
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            httpResponse = httpClient.execute(httpPost);
+            return httpResponse.getStatusLine().getStatusCode();
+        } catch (Exception e) {
+            Log.e(LOG_TAG, e.getMessage());
+            return 0;
+        }
+    }
+
+
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

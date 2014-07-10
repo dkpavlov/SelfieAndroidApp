@@ -192,7 +192,15 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
     }
 
     public void openFavoritesButtonClick(View v){
-        Intent intent = new Intent(this, FavoriteActivity.class);
+        Intent intent = null;
+        switch (v.getId()){
+            case R.id.favorite:
+                intent = new Intent(this, FavoriteActivity.class);
+                break;
+            case R.id.my_profile:
+                intent = new Intent(this, ProfileActivity.class);
+                break;
+        }
         startActivity(intent);
     }
 

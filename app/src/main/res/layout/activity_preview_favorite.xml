@@ -12,16 +12,4 @@
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/delete"
-        android:background="@drawable/delete"
-        android:scaleX=".5"
-        android:scaleY=".5"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="onDeleteButtonClick"/>
-
 </RelativeLayout>
