@@ -11,9 +11,16 @@ public class BitmapAndString {
 
     private String str;
 
-    public BitmapAndString(Bitmap bitmap, String str) {
+    private String score;
+
+    public BitmapAndString(Bitmap bitmap, String str, String score) {
         this.bitmap = bitmap;
         this.str = str;
+        this.score = score;
+    }
+
+    public String getScore() {
+        return score;
     }
 
     public Bitmap getBitmap() {

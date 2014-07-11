@@ -59,7 +59,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="#CC3BB0DC">
+        android:background="#CC3BB0DC"
+        android:id="@+id/relativeLayout">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -111,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/up_vote"
                 android:background="@drawable/vote_up"
-                android:onClick="onShareButtonClick"
+                android:onClick="onVoteUpButtonClick"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@+id/imageButton4"
                 android:layout_marginLeft="12dp"/>
@@ -135,4 +136,16 @@
                 android:layout_marginLeft="12dp"/>
             </LinearLayout>
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="93"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:background="@drawable/round_red_shape"
+        android:id="@+id/score_view"
+        android:layout_above="@+id/relativeLayout"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

@@ -32,7 +32,9 @@
             android:textSize="14dp"
             android:text="@string/comment_button_send"
             android:id="@+id/commentButtonSend"
-            android:onClick="onCommentSendClick"/>
+            android:onClick="onCommentSendClick"
+            android:background="@drawable/round_button_blue"
+            android:textColor="#FFFFFF"/>
     </LinearLayout>>
 
 </LinearLayout>

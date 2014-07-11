@@ -1,8 +1,10 @@
 package com.example.selfie.utils.gallery;
 
 import android.os.AsyncTask;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.selfie.utils.BitmapAndString;
 import com.example.selfie.utils.Order;
@@ -15,11 +17,16 @@ public class NextImageLoader extends AsyncTask<String, Void, BitmapAndString> {
 
     private static final String LOG_TAG = "NEW_IMAGE_LOADER";
     ImageView bmImage;
-    StringBuffer pictureId;
+    StringBuilder pictureId;
+    TextView scoreTextView;
+    int sHeight, sWidth;
 
-    public NextImageLoader(ImageView bmImage, StringBuffer pictureId) {
+    public NextImageLoader(ImageView bmImage, StringBuilder pictureId, TextView scoreTextView, int sHeight, int sWidth) {
         this.pictureId = pictureId;
         this.bmImage = bmImage;
+        this.scoreTextView = scoreTextView;
+        this.sHeight = sHeight;
+        this.sWidth = sWidth;
     }
 
     protected BitmapAndString doInBackground(String... args) {
@@ -34,7 +41,7 @@ public class NextImageLoader extends AsyncTask<String, Void, BitmapAndString> {
 
         try {
             bitmapAndString = MyHttpClient
-                    .getNextImage(direction, pictureId, gender, type, order, baseUrl);
+                    .getNextImage(direction, pictureId, gender, type, order, baseUrl, sHeight, sWidth);
         } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage());
         }
@@ -42,7 +49,8 @@ public class NextImageLoader extends AsyncTask<String, Void, BitmapAndString> {
     }
 
     protected void onPostExecute(BitmapAndString result) {
-        pictureId = new StringBuffer(result.getStr());
+        pictureId.replace(0, pictureId.length(), result.getStr());
         bmImage.setImageBitmap(result.getBitmap());
+        scoreTextView.setText(result.getScore());
     }
 }

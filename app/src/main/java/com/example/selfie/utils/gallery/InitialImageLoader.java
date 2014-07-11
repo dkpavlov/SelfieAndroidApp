@@ -2,7 +2,9 @@ package com.example.selfie.utils.gallery;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.selfie.utils.BitmapAndString;
 import com.example.selfie.utils.Order;
@@ -16,12 +18,18 @@ import java.io.IOException;
 public class InitialImageLoader extends AsyncTask<String, Void, BitmapAndString> {
 
     private static final String LOG_TAG = "INITIAL_IMAGE_LOADER";
-    StringBuffer pictureId;
+    StringBuilder pictureId;
     ImageView imageView;
+    TextView scoreTextView;
+    int sHeight, sWidth;
 
-    public InitialImageLoader(StringBuffer pictureId, ImageView imageView) {
+    public InitialImageLoader(StringBuilder pictureId, ImageView imageView, TextView scoreTextView,
+                              int sHeight, int sWidth) {
         this.pictureId = pictureId;
         this.imageView = imageView;
+        this.scoreTextView = scoreTextView;
+        this.sHeight = sHeight;
+        this.sWidth = sWidth;
     }
 
     protected BitmapAndString doInBackground(String... args) {
@@ -37,23 +45,24 @@ public class InitialImageLoader extends AsyncTask<String, Void, BitmapAndString>
             switch (order){
                 case ORDERED:
                     bitmapAndString = MyHttpClient
-                            .getNewestPicture(gender, type, baseUrl);
+                            .getNewestPicture(gender, type, baseUrl, sHeight, sWidth);
                     break;
                 case RANDOMIZED:
                     bitmapAndString = MyHttpClient
-                            .getNextImage("UP", "0", gender, type, Order.RANDOMIZED, baseUrl);
+                            .getNextImage("UP", "0", gender, type, Order.RANDOMIZED, baseUrl, sHeight, sWidth);
                     break;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage());
         }
         return bitmapAndString;
     }
 
     protected void onPostExecute(BitmapAndString result) {
-        pictureId.delete(0, pictureId.length());
-        pictureId.append(result.getStr());
+        pictureId.replace(0, pictureId.length(), result.getStr());
         imageView.setImageBitmap(result.getBitmap());
+        scoreTextView.setText(result.getScore());
+
     }
 
 

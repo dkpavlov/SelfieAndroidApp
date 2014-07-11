@@ -28,4 +28,7 @@ public class MyProfileActivity extends Activity {
         startActivity(intent);
     }
 
+    public void backMyProfile(View v){
+        onBackPressed();
+    }
 }

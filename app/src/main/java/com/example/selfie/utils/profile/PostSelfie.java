@@ -45,9 +45,9 @@ public class PostSelfie extends AsyncTask<String, Void, String> {
 
     protected void onPostExecute(String res) {
         if(res.equals("200")){
-            Toast.makeText(context, "Selfie was uploded!", Toast.LENGTH_LONG);
+            Toast.makeText(context, "Selfie was uploaded!", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(context, "ERORR", Toast.LENGTH_LONG);
+            Toast.makeText(context, "ERORR", Toast.LENGTH_LONG).show();
         }
     }
 }

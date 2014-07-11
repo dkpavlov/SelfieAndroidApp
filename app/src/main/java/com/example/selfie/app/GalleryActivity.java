@@ -10,9 +10,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.selfie.app.fragments.MenuFragment;
 import com.example.selfie.utils.gallery.ImageLoader;
@@ -21,6 +23,7 @@ import com.example.selfie.utils.gallery.InitialImageLoader;
 import com.example.selfie.utils.Order;
 import com.example.selfie.utils.data.AddSelfieToFavorites;
 import com.example.selfie.utils.data.SelfieDataSource;
+import com.example.selfie.utils.gallery.VoteUp;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -32,23 +35,26 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
 
     public static final String SELFIE_ID_KAY = "SELFIE_ID";
     public static final String WEB_SERVICE = "http://194.12.246.68/srest";
+    /*public static final String WEB_SERVICE = "http://10.20.2.41:8080/RESTfulExample";*/
     public static final String CURRENT_PICTURE_ID = "PICTURE_ID";
     public static final String PICTURES_ID_LIST_KAY = "PICTURES_ID_LIST";
 
     private boolean menuVisibility = false;
-    private ArrayList<String> randomPicturesIdStringArray = new ArrayList<String>();
 
     private SelfieDataSource dataSource;
     private String GENDER;
     private String TYPE;
     private String ORDER;
 
-    private StringBuffer currentPictureId = new StringBuffer("");
+    private StringBuilder currentPictureId =  new StringBuilder("");
 
     ImageView imageView;
     MenuFragment menuFragment;
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
+    TextView scoreTextView;
+
+    int sHeight, sWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +69,13 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
         dataSource = new SelfieDataSource(this);
         dataSource.open();
 
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        sHeight = metrics.heightPixels;
+        sWidth = metrics.widthPixels;
+
         imageView = (ImageView) findViewById(R.id.galleryMainImage);
+        scoreTextView = (TextView) findViewById(R.id.score_view);
         fragmentManager = getFragmentManager();
         menuFragment = (MenuFragment) fragmentManager.findFragmentById(R.id.menuFragment);
         menuFragment.getView().setBackgroundColor(Color.parseColor("#222219"));
@@ -74,15 +86,14 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
 
 
         if(savedInstanceState != null && savedInstanceState.containsKey(CURRENT_PICTURE_ID)){
-            currentPictureId = new StringBuffer(savedInstanceState.getInt(CURRENT_PICTURE_ID));
-            randomPicturesIdStringArray = savedInstanceState.getStringArrayList(PICTURES_ID_LIST_KAY);
+            currentPictureId = new StringBuilder(savedInstanceState.getInt(CURRENT_PICTURE_ID));
             GENDER = savedInstanceState.getString(HomeActivity.PICTURES_TYPE_KEY);
             TYPE = savedInstanceState.getString(HomeActivity.TYPE_OF_CONTENT_KEY);
             ORDER = savedInstanceState.getString(HomeActivity.ORDER_TYPE_KEY);
             new ImageLoader(imageView)
                     .execute(WEB_SERVICE, currentPictureId.toString());
         } else {
-            new InitialImageLoader(currentPictureId, imageView)
+            new InitialImageLoader(currentPictureId, imageView, scoreTextView, sHeight, sWidth)
                     .execute(WEB_SERVICE, GENDER, TYPE, ORDER);
         }
     }
@@ -91,7 +102,6 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
     protected void onSaveInstanceState(Bundle icicle) {
         super.onSaveInstanceState(icicle);
         icicle.putString(CURRENT_PICTURE_ID, currentPictureId.toString());
-        icicle.putStringArrayList(PICTURES_ID_LIST_KAY, randomPicturesIdStringArray);
         icicle.putString(HomeActivity.PICTURES_TYPE_KEY, GENDER);
         icicle.putString(HomeActivity.TYPE_OF_CONTENT_KEY, TYPE);
         icicle.putString(HomeActivity.ORDER_TYPE_KEY, ORDER);
@@ -109,7 +119,7 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
                 break;
         }
         String picId = currentPictureId.toString();
-        new NextImageLoader(imageView, currentPictureId)
+        new NextImageLoader(imageView, currentPictureId, scoreTextView, sHeight, sWidth)
                 .execute(WEB_SERVICE, picId, GENDER, TYPE, direction, ORDER);
     }
 
@@ -141,6 +151,11 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
         intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/temporary_file.jpg"));
         startActivity(Intent.createChooser(intent, "Share Image"));
 
+    }
+
+    public void onVoteUpButtonClick(View v){
+        new VoteUp(getApplicationContext(), scoreTextView)
+                .execute(WEB_SERVICE, currentPictureId.toString());
     }
 
     public void onMenuButtonClick(View v){

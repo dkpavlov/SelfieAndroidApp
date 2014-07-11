@@ -5,10 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.example.selfie.utils.BitmapAndString;
 import com.example.selfie.utils.Order;
+import com.example.selfie.utils.ui.ScaleBitmap;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -36,6 +38,7 @@ public class MyHttpClient  {
 
     public static final String LOG_TAG = "MY_HTTP_CLIENT";
     private static final String HEADER_FOR_PICTURE_ID = "Picture-id";
+    private static final String HEADER_FOR_PICTURE_SCORE = "Picture-score";
 
     public static String makeHttpGet(String url){
         HttpResponse httpResponse;
@@ -81,13 +84,16 @@ public class MyHttpClient  {
         HttpResponse httpResponse;
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(url);
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(values.size());
-
-        for(String key: headers.keySet()){
-            httpPost.setHeader(key, headers.get(key));
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        if(headers != null){
+            for(String key: headers.keySet()){
+                httpPost.setHeader(key, headers.get(key));
+            }
         }
-        for(String key: values.keySet()){
-            nameValuePairs.add(new BasicNameValuePair(key, values.get(key)));
+        if(values != null){
+            for(String key: values.keySet()){
+                nameValuePairs.add(new BasicNameValuePair(key, values.get(key)));
+            }
         }
         try{
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -112,11 +118,13 @@ public class MyHttpClient  {
                                                String gender,
                                                String type,
                                                Order order,
-                                               String baseURL) throws IOException {
+                                               String baseURL,
+                                               int sHeight,
+                                               int sWidth) throws IOException {
 
         URL url = null;
         Bitmap bitmap;
-        String newPictureId;
+        String newPictureId, score;
         switch (order){
             case ORDERED:
                 url = new URL(baseURL + "/img/order"
@@ -134,24 +142,27 @@ public class MyHttpClient  {
                 break;
         }
 
-        URLConnection urlConnection = url.openConnection();
-        newPictureId = urlConnection.getHeaderField(HEADER_FOR_PICTURE_ID);
-        InputStream in = urlConnection.getInputStream();
-        bitmap = BitmapFactory.decodeStream(in);
 
-        return new BitmapAndString(bitmap, newPictureId);
+        URLConnection urlConnection = url.openConnection();
+        InputStream in = urlConnection.getInputStream();
+        newPictureId = urlConnection.getHeaderField(HEADER_FOR_PICTURE_ID);
+        score = urlConnection.getHeaderField(HEADER_FOR_PICTURE_SCORE);
+        bitmap = ScaleBitmap.scale(sWidth, sHeight, BitmapFactory.decodeStream(in));
+        return new BitmapAndString(bitmap, newPictureId, score);
     }
 
     public static BitmapAndString getNewestPicture(String gender,
                                                    String type,
-                                                   String baseURL) throws IOException {
+                                                   String baseURL,
+                                                   int sHeight,
+                                                   int sWidth) throws IOException {
         URL url = new URL(baseURL + "/img/new/order/"
                             + gender + "/"
                             + type);
         URLConnection urlConnection = url.openConnection();
         String newPictureId = urlConnection.getHeaderField(HEADER_FOR_PICTURE_ID);
-        Bitmap bitmap = BitmapFactory.decodeStream(urlConnection.getInputStream());
-
-        return new BitmapAndString(bitmap, newPictureId);
+        String score = urlConnection.getHeaderField(HEADER_FOR_PICTURE_SCORE);
+        Bitmap bitmap = ScaleBitmap.scale(sWidth, sHeight, BitmapFactory.decodeStream(urlConnection.getInputStream()));
+        return new BitmapAndString(bitmap, newPictureId, score);
     }
 }

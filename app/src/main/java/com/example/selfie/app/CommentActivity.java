@@ -38,10 +38,10 @@ public class CommentActivity extends Activity {
 
         Typeface exoTf = Typeface.createFromAsset(getAssets(), "fonts/Exo2-BoldItalic.ttf");
 
-        commentButtonSend = (Button) findViewById(R.id.commentButtonSend);
+        /*commentButtonSend = (Button) findViewById(R.id.commentButtonSend);
         commentButtonSend.setTypeface(exoTf);
         commentButtonSend.setTextColor(Color.WHITE);
-        commentButtonSend.setBackgroundColor(Color.parseColor("#18A432"));
+        commentButtonSend.setBackgroundColor(Color.parseColor("#18A432"));*/
 
         commentText = (EditText) findViewById(R.id.commentTextField);
         commentList = (ListView) findViewById(R.id.commentList);

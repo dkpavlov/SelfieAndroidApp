@@ -35,12 +35,8 @@ public class FavoriteActivity extends Activity {
         gridView.setAdapter(new ImageAdapter(selfieList, this, dataSource));
     }
 
-    @Override
-    public void onBackPressed()
-    {
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-        super.onBackPressed();
+    public void backFavorite(View v){
+        onBackPressed();
     }
 
     @Override

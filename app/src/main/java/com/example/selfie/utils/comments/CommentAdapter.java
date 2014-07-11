@@ -57,6 +57,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         if(view == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(android.R.layout.simple_list_item_2, null);
+
         }
         Comment comment = getItem(i);
 

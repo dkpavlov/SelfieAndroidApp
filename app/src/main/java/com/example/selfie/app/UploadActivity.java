@@ -12,7 +12,9 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.selfie.utils.file.FileUtil;
 import com.example.selfie.utils.profile.PostSelfie;
@@ -25,8 +27,12 @@ import java.util.List;
 public class UploadActivity extends Activity {
 
     ImageView imageView;
-    private Uri selectedImageUri;
+    ImageView maleCheckIcon;
+    ImageView femaleCheckIcon;
+    ImageButton removeImage;
+    private Uri selectedImageUri = null;
     private Uri outputFileUri;
+    private String gender = "";
 
     private static final int PICTURE_REQUEST_CODE = 1;
 
@@ -35,6 +41,9 @@ public class UploadActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
         imageView = (ImageView) findViewById(R.id.preview_selfie);
+        maleCheckIcon = (ImageView) findViewById(R.id.men_gender_check);
+        femaleCheckIcon = (ImageView) findViewById(R.id.woman_gender_check);
+        removeImage = (ImageButton) findViewById(R.id.remove_image);
     }
 
     public void onButtonClick(View v){
@@ -50,10 +59,30 @@ public class UploadActivity extends Activity {
                 } catch (IOException e) {
                    Log.e("Profile-Activity", e.getMessage());
                 }
-                new PostSelfie(getApplicationContext())
-                        .execute(jpgBase64, "MALE", "SFW", GalleryActivity.WEB_SERVICE);
+                if(selectedImageUri == null || gender.equals("")){
+                    Toast.makeText(getApplicationContext(), "Place select picture and gender", Toast.LENGTH_LONG).show();
+                } else {
+                    new PostSelfie(getApplicationContext())
+                            .execute(jpgBase64, gender, "SFW", GalleryActivity.WEB_SERVICE);
+                }
         }
+    }
 
+    public void genderSelect(View v){
+        switch (v.getId()){
+            case R.id.men_gender:
+                gender = "MALE";
+                break;
+            case R.id.woman_gender:
+                gender = "FEMALE";
+                break;
+        }
+        drawGenderSelectChecks();
+    }
+
+    public void removeImage(View v){
+        imageView.setImageDrawable(null);
+        removeImage.setVisibility(View.INVISIBLE);
     }
 
     private void openImageIntent() {
@@ -117,9 +146,24 @@ public class UploadActivity extends Activity {
             }
             try {
                 imageView.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri));
+                removeImage.setVisibility(View.VISIBLE);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void backUpload(View v){
+        onBackPressed();
+    }
+
+    private void drawGenderSelectChecks(){
+        if(gender.equals("MALE")){
+            maleCheckIcon.setVisibility(View.VISIBLE);
+            femaleCheckIcon.setVisibility(View.INVISIBLE);
+        } else {
+            maleCheckIcon.setVisibility(View.INVISIBLE);
+            femaleCheckIcon.setVisibility(View.VISIBLE);
         }
     }
 }

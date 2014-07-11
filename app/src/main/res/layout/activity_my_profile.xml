@@ -14,7 +14,8 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/back_button"
+            android:id="@+id/back_button_my_profile"
+            android:onClick="backMyProfile"
             android:src="@drawable/back"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
@@ -72,7 +73,7 @@
         android:paddingRight="10dp"
         android:textColor="#FFFFFF"
         android:text="my uploads"
-        android:background="@drawable/round_button"
+        android:background="@drawable/round_button_blue"
         android:id="@+id/my_uploads"
         android:layout_marginTop="39dp"
         android:layout_below="@+id/space"
