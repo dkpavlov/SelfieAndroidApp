@@ -48,6 +48,10 @@
             android:name=".MyUploadsActivity"
             android:label="@string/title_activity_my_uploads" >
         </activity>
+        <activity
+            android:name=".PreviewMyUploadActivity"
+            android:label="@string/title_activity_preview_my_upload" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

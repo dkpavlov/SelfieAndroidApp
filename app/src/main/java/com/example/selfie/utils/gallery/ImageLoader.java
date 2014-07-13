@@ -4,38 +4,59 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.selfie.utils.BitmapAndString;
+import com.example.selfie.utils.http.MyHttpClient;
+import com.example.selfie.utils.ui.ScaleBitmap;
 
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Created by dpavlov on 8.7.2014 г..
  */
-public class ImageLoader extends AsyncTask<String, Void, Bitmap> {
+public class ImageLoader extends AsyncTask<String, Void, BitmapAndString> {
 
     private static final String LOG_TAG = "IMAGE_LOADER";
 
     ImageView imageView;
+    TextView textView;
 
-    public ImageLoader(ImageView imageView) {
+    int sWidth, sHeight;
+
+    public ImageLoader(ImageView imageView, TextView textView, int sHeight, int sWidth) {
         this.imageView = imageView;
+        this.textView = textView;
+        this.sHeight = sHeight;
+        this.sWidth = sWidth;
     }
 
     @Override
-    protected Bitmap doInBackground(String... args) {
+    protected BitmapAndString doInBackground(String... args) {
         String baseUrl = args[0];
         String pictureId = args[1];
-        Bitmap mIcon = null;
         try {
-            InputStream in = new java.net.URL(baseUrl + "/img/img/" + pictureId).openStream();
-            mIcon = BitmapFactory.decodeStream(in);
+            URL url = new java.net.URL(baseUrl + "/img/img/" + pictureId);
+            URLConnection urlConnection = url.openConnection();
+            String picturId = urlConnection.getHeaderField(MyHttpClient.HEADER_FOR_PICTURE_ID);
+            String score = urlConnection.getHeaderField(MyHttpClient.HEADER_FOR_PICTURE_SCORE);
+            InputStream is = urlConnection.getInputStream();
+            Bitmap scaledBitmap = ScaleBitmap.decodeBitmapSize(is, sHeight, sWidth);
+            return new BitmapAndString(scaledBitmap, pictureId, score);
         } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage());
         }
-        return mIcon;
+        return null;
     }
 
-    protected void onPostExecute(Bitmap result) {
-        imageView.setImageBitmap(result);
+    protected void onPostExecute(BitmapAndString result) {
+        if(result != null){
+            textView.setText(result.getScore());
+            imageView.setImageBitmap(result.getBitmap());
+        }
     }
 }

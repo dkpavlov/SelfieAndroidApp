@@ -2,35 +2,60 @@ package com.example.selfie.app;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.GridView;
+
 import com.example.selfie.app.R;
+import com.example.selfie.utils.data.MySelfie;
+import com.example.selfie.utils.data.Selfie;
+import com.example.selfie.utils.data.SelfieDataSource;
+import com.example.selfie.utils.favorite.ImageAdapter;
+import com.example.selfie.utils.upload.MySelfiesAddapter;
+
+import java.util.List;
 
 public class MyUploadsActivity extends Activity {
+
+    private SelfieDataSource dataSource;
+    private GridView gridView;
+    int sHeight, sWidth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_uploads);
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        sHeight = metrics.heightPixels;
+        sWidth = metrics.widthPixels;
+
+        dataSource = new SelfieDataSource(this);
+        dataSource.open();
+
+        List<MySelfie> selfieList = dataSource.getAllMySelfies();
+        gridView = (GridView) findViewById(R.id.my_uploads_grid_view);
+        gridView.setAdapter(new MySelfiesAddapter(selfieList, this, dataSource));
     }
 
+    public void backMySelfies(View v){
+        onBackPressed();
+    }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.my_uploads, menu);
-        return true;
+    protected void onResume() {
+        dataSource.open();
+        super.onResume();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    protected void onPause() {
+        dataSource.close();
+        super.onPause();
     }
+
 }

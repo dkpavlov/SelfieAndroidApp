@@ -34,8 +34,8 @@ import java.util.ArrayList;
 public class GalleryActivity extends Activity implements MenuFragment.OnFragmentInteractionListener{
 
     public static final String SELFIE_ID_KAY = "SELFIE_ID";
-    public static final String WEB_SERVICE = "http://194.12.246.68/srest";
-    /*public static final String WEB_SERVICE = "http://10.20.2.41:8080/RESTfulExample";*/
+    /*public static final String WEB_SERVICE = "http://194.12.246.68/srest";*/
+    public static final String WEB_SERVICE = "http://192.168.2.3:8080/RESTfulExample";
     public static final String CURRENT_PICTURE_ID = "PICTURE_ID";
     public static final String PICTURES_ID_LIST_KAY = "PICTURES_ID_LIST";
 
@@ -78,7 +78,6 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
         scoreTextView = (TextView) findViewById(R.id.score_view);
         fragmentManager = getFragmentManager();
         menuFragment = (MenuFragment) fragmentManager.findFragmentById(R.id.menuFragment);
-        menuFragment.getView().setBackgroundColor(Color.parseColor("#222219"));
         transaction = fragmentManager.beginTransaction();
         transaction.hide(menuFragment);
         transaction.commit();
@@ -86,11 +85,11 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
 
 
         if(savedInstanceState != null && savedInstanceState.containsKey(CURRENT_PICTURE_ID)){
-            currentPictureId = new StringBuilder(savedInstanceState.getInt(CURRENT_PICTURE_ID));
+            currentPictureId = new StringBuilder(savedInstanceState.getString(CURRENT_PICTURE_ID));
             GENDER = savedInstanceState.getString(HomeActivity.PICTURES_TYPE_KEY);
             TYPE = savedInstanceState.getString(HomeActivity.TYPE_OF_CONTENT_KEY);
             ORDER = savedInstanceState.getString(HomeActivity.ORDER_TYPE_KEY);
-            new ImageLoader(imageView)
+            new ImageLoader(imageView, scoreTextView, sHeight, sWidth)
                     .execute(WEB_SERVICE, currentPictureId.toString());
         } else {
             new InitialImageLoader(currentPictureId, imageView, scoreTextView, sHeight, sWidth)

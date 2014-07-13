@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -12,10 +13,13 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.selfie.utils.data.SelfieDataSource;
 import com.example.selfie.utils.file.FileUtil;
 import com.example.selfie.utils.profile.PostSelfie;
 
@@ -30,9 +34,15 @@ public class UploadActivity extends Activity {
     ImageView maleCheckIcon;
     ImageView femaleCheckIcon;
     ImageButton removeImage;
+    EditText emailValidation;
+
+    Bitmap bitmap;
+
     private Uri selectedImageUri = null;
     private Uri outputFileUri;
     private String gender = "";
+
+    SelfieDataSource dataSource;
 
     private static final int PICTURE_REQUEST_CODE = 1;
 
@@ -44,6 +54,9 @@ public class UploadActivity extends Activity {
         maleCheckIcon = (ImageView) findViewById(R.id.men_gender_check);
         femaleCheckIcon = (ImageView) findViewById(R.id.woman_gender_check);
         removeImage = (ImageButton) findViewById(R.id.remove_image);
+        emailValidation = (EditText) findViewById(R.id.validate_email);
+        dataSource = new SelfieDataSource(this);
+        dataSource.open();
     }
 
     public void onButtonClick(View v){
@@ -59,10 +72,10 @@ public class UploadActivity extends Activity {
                 } catch (IOException e) {
                    Log.e("Profile-Activity", e.getMessage());
                 }
-                if(selectedImageUri == null || gender.equals("")){
-                    Toast.makeText(getApplicationContext(), "Place select picture and gender", Toast.LENGTH_LONG).show();
+                if(selectedImageUri == null || gender.equals("") || !isValidEmailAddress(emailValidation.getText().toString())){
+                    Toast.makeText(getApplicationContext(), "Place select picture, gender and provide valid email", Toast.LENGTH_LONG).show();
                 } else {
-                    new PostSelfie(getApplicationContext())
+                    new PostSelfie(bitmap, getApplicationContext())
                             .execute(jpgBase64, gender, "SFW", GalleryActivity.WEB_SERVICE);
                 }
         }
@@ -145,7 +158,8 @@ public class UploadActivity extends Activity {
                 selectedImageUri = data == null ? null : data.getData();
             }
             try {
-                imageView.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri));
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                imageView.setImageBitmap(bitmap);
                 removeImage.setVisibility(View.VISIBLE);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -165,5 +179,28 @@ public class UploadActivity extends Activity {
             maleCheckIcon.setVisibility(View.INVISIBLE);
             femaleCheckIcon.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        dataSource.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        dataSource.close();
+        super.onPause();
+    }
+
+    public static boolean isValidEmailAddress(String email) {
+        boolean result = true;
+        String emailRegEx = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        try {
+            result = email.matches(emailRegEx);
+        } catch (Exception ex) {
+            result = false;
+        }
+        return result;
     }
 }

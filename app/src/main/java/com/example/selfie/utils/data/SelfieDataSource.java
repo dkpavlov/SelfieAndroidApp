@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -45,6 +46,13 @@ public class SelfieDataSource {
         return newSelfie;
     }
 
+    public void createMySelfie(String selfieId, String thumb){
+        ContentValues values = new ContentValues();
+        values.put(SelfieSQLHelper.COLUMN_MY_SELFIE_ID, selfieId);
+        values.put(SelfieSQLHelper.COLUMN_SELFIE_THUMB_PATH, thumb);
+        database.insert(SelfieSQLHelper.TABLE_MY_SELFIES, null, values);
+    }
+
     public Boolean findByPath(String path){
         Cursor cursor = database.query(SelfieSQLHelper.TABLE_FAVORITE_SELFIES, allColumns,
                 SelfieSQLHelper.COLUMN_SELFIE_PATH + " = '" + path + "'", null, null, null, null);
@@ -82,12 +90,33 @@ public class SelfieDataSource {
 
     }
 
+    public List<MySelfie> getAllMySelfies(){
+        List<MySelfie> mySelfiesList = new ArrayList<MySelfie>();
+        Cursor cursor = database
+                .rawQuery("select * from " + SelfieSQLHelper.TABLE_MY_SELFIES, null);
+        if(cursor.moveToFirst()){
+            while (!cursor.isAfterLast()){
+                mySelfiesList.add(cursorToMySelfie(cursor));
+                cursor.moveToNext();
+            }
+        }
+        return mySelfiesList;
+    }
+
     private Selfie cursorToSelfie(Cursor cursor) {
         Selfie selfie = new Selfie();
         selfie.setId(cursor.getLong(0));
         selfie.setPath(cursor.getString(1));
         selfie.setThumbPath(cursor.getString(2));
         return selfie;
+    }
+
+    private MySelfie cursorToMySelfie(Cursor cursor) {
+        MySelfie mySelfie = new MySelfie();
+        mySelfie.setId(cursor.getLong(0));
+        mySelfie.setSelfieId(cursor.getString(1));
+        mySelfie.setThumbName(cursor.getString(2));
+        return mySelfie;
     }
 
 

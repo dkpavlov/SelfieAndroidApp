@@ -25,5 +25,6 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_my_profile">my profile</string>
     <string name="title_activity_my_uploads">MyUploadsActivity</string>
+    <string name="title_activity_preview_my_upload">PreviewMyUploadActivity</string>
 
 </resources>

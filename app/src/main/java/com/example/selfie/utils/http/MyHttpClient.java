@@ -37,8 +37,8 @@ import java.util.Map;
 public class MyHttpClient  {
 
     public static final String LOG_TAG = "MY_HTTP_CLIENT";
-    private static final String HEADER_FOR_PICTURE_ID = "Picture-id";
-    private static final String HEADER_FOR_PICTURE_SCORE = "Picture-score";
+    public static final String HEADER_FOR_PICTURE_ID = "Picture-id";
+    public static final String HEADER_FOR_PICTURE_SCORE = "Picture-score";
 
     public static String makeHttpGet(String url){
         HttpResponse httpResponse;
@@ -105,6 +105,38 @@ public class MyHttpClient  {
         }
     }
 
+    public static String makeHttpPostAndGetPictureId(String url,
+                                                  Map<String, String> headers,
+                                                  Map<String, String> values){
+
+        HttpResponse httpResponse;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(url);
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        if(headers != null){
+            for(String key: headers.keySet()){
+                httpPost.setHeader(key, headers.get(key));
+            }
+        }
+        if(values != null){
+            for(String key: values.keySet()){
+                nameValuePairs.add(new BasicNameValuePair(key, values.get(key)));
+            }
+        }
+        try{
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            httpResponse = httpClient.execute(httpPost);
+            if(httpResponse.getStatusLine().getStatusCode() == 200){
+                return httpResponse.getHeaders(HEADER_FOR_PICTURE_ID)[0].getValue();
+            }
+        } catch (Exception e) {
+            Log.e(LOG_TAG, e.getMessage());
+
+        }
+        return "0";
+    }
+
+
 
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
@@ -123,7 +155,6 @@ public class MyHttpClient  {
                                                int sWidth) throws IOException {
 
         URL url = null;
-        Bitmap bitmap;
         String newPictureId, score;
         switch (order){
             case ORDERED:
@@ -147,8 +178,7 @@ public class MyHttpClient  {
         InputStream in = urlConnection.getInputStream();
         newPictureId = urlConnection.getHeaderField(HEADER_FOR_PICTURE_ID);
         score = urlConnection.getHeaderField(HEADER_FOR_PICTURE_SCORE);
-        bitmap = ScaleBitmap.scale(sWidth, sHeight, BitmapFactory.decodeStream(in));
-        return new BitmapAndString(bitmap, newPictureId, score);
+        return new BitmapAndString(ScaleBitmap.decodeBitmapSize(in, sHeight, sWidth), newPictureId, score);
     }
 
     public static BitmapAndString getNewestPicture(String gender,

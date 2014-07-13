@@ -2,66 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.selfie.app.GalleryActivity">
-
+    tools:context="com.example.selfie.app.PreviewMyUploadActivity">
 
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/galleryMainImage"
+        android:id="@+id/my_uploads_preview_image_view"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:scaleType="centerCrop"/>
 
-    <fragment
-        class="com.example.selfie.app.fragments.MenuFragment"
-        android:id="@+id/menuFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_menu"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"/>
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/back"
-        android:onClick="onArrowClick"
-        android:background="@drawable/left"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/flowers"
-        android:onClick="onArrowClick"
-        android:background="@drawable/right"
-        android:layout_alignTop="@+id/back"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton3"
-        android:background="@drawable/menu"
-        android:onClick="onMenuButtonClick"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:id="@+id/menu_bar"
         android:background="#CC3BB0DC"
         android:alpha=".8"
-        android:id="@+id/relativeLayout">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -135,18 +96,19 @@
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@+id/imageButton4"
                 android:layout_marginLeft="12dp"/>
-            </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="93"
-        android:textColor="#FFFFFF"
-        android:padding="10dp"
-        android:background="@drawable/round_red_shape"
-        android:id="@+id/score_view"
-        android:layout_above="@+id/relativeLayout"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="93"
+android:textColor="#FFFFFF"
+android:padding="10dp"
+android:background="@drawable/round_red_shape"
+android:id="@+id/my_uplode_score_view"
+    android:layout_above="@+id/menu_bar"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true" />
+
 </RelativeLayout>
