@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -19,16 +20,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.selfie.app.fragments.MenuFragment;
+import com.example.selfie.utils.MyPreferencesManager;
+import com.example.selfie.utils.Order;
 import com.example.selfie.utils.data.SelfieDataSource;
 import com.example.selfie.utils.file.FileUtil;
 import com.example.selfie.utils.profile.PostSelfie;
+import com.example.selfie.utils.ui.ScaleBitmap;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UploadActivity extends Activity {
+public class UploadActivity extends MyMenuActivity {
 
     ImageView imageView;
     ImageView maleCheckIcon;
@@ -46,6 +51,8 @@ public class UploadActivity extends Activity {
 
     private static final int PICTURE_REQUEST_CODE = 1;
 
+    int sHeight, sWidth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +62,24 @@ public class UploadActivity extends Activity {
         femaleCheckIcon = (ImageView) findViewById(R.id.woman_gender_check);
         removeImage = (ImageButton) findViewById(R.id.remove_image);
         emailValidation = (EditText) findViewById(R.id.validate_email);
-        dataSource = new SelfieDataSource(this);
-        dataSource.open();
+
+        preferencesManager = new MyPreferencesManager(this);
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        sHeight = metrics.heightPixels;
+        sWidth = metrics.widthPixels;
+
+        GENDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_GENDER, "FEMALE");
+        TYPE = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_TYPE, "SFW");
+        ORDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_ORDER, Order.RANDOMIZED.toString());
+
+        fragmentManager = getFragmentManager();
+        menuFragment = (MenuFragment) fragmentManager.findFragmentById(R.id.menu_fragment_upload);
+        transaction = fragmentManager.beginTransaction();
+        transaction.hide(menuFragment);
+        transaction.commit();
+        setFragmentButtonTest();
     }
 
     public void onButtonClick(View v){
@@ -158,7 +181,7 @@ public class UploadActivity extends Activity {
                 selectedImageUri = data == null ? null : data.getData();
             }
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                bitmap = ScaleBitmap.decodeUriToScaledBitmap(this, selectedImageUri, sHeight, sWidth);
                 imageView.setImageBitmap(bitmap);
                 removeImage.setVisibility(View.VISIBLE);
             } catch (IOException e) {
@@ -183,13 +206,14 @@ public class UploadActivity extends Activity {
 
     @Override
     protected void onResume() {
-        dataSource.open();
+        transaction = fragmentManager.beginTransaction();
+        transaction.hide(menuFragment).commit();
+        menuVisibility = false;
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        dataSource.close();
         super.onPause();
     }
 

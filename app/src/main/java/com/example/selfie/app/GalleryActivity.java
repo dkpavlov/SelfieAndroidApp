@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.selfie.app.fragments.MenuFragment;
+import com.example.selfie.utils.MyAccountManager;
+import com.example.selfie.utils.MyPreferencesManager;
 import com.example.selfie.utils.gallery.ImageLoader;
 import com.example.selfie.utils.gallery.NextImageLoader;
 import com.example.selfie.utils.gallery.InitialImageLoader;
@@ -31,27 +33,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GalleryActivity extends Activity implements MenuFragment.OnFragmentInteractionListener{
+public class GalleryActivity extends MyMenuActivity{
 
     public static final String SELFIE_ID_KAY = "SELFIE_ID";
-    /*public static final String WEB_SERVICE = "http://194.12.246.68/srest";*/
-    public static final String WEB_SERVICE = "http://192.168.2.3:8080/RESTfulExample";
+    public static final String WEB_SERVICE = "http://194.12.246.68/srest";
+   /* public static final String WEB_SERVICE = "http://192.168.2.3:8080/RESTfulExample";*/
     public static final String CURRENT_PICTURE_ID = "PICTURE_ID";
     public static final String PICTURES_ID_LIST_KAY = "PICTURES_ID_LIST";
 
     private boolean menuVisibility = false;
 
     private SelfieDataSource dataSource;
-    private String GENDER;
-    private String TYPE;
-    private String ORDER;
 
     private StringBuilder currentPictureId =  new StringBuilder("");
 
     ImageView imageView;
-    MenuFragment menuFragment;
-    FragmentManager fragmentManager;
-    FragmentTransaction transaction;
     TextView scoreTextView;
 
     int sHeight, sWidth;
@@ -61,10 +57,11 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
-        Intent intent = getIntent();
-        GENDER = intent.getStringExtra(HomeActivity.PICTURES_TYPE_KEY);
-        TYPE = intent.getStringExtra(HomeActivity.TYPE_OF_CONTENT_KEY);
-        ORDER = intent.getStringExtra(HomeActivity.ORDER_TYPE_KEY);
+        preferencesManager = new MyPreferencesManager(this);
+
+        GENDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_GENDER, "FEMALE");
+        TYPE = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_TYPE, "SFW");
+        ORDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_ORDER, Order.RANDOMIZED.toString());
 
         dataSource = new SelfieDataSource(this);
         dataSource.open();
@@ -86,9 +83,6 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
 
         if(savedInstanceState != null && savedInstanceState.containsKey(CURRENT_PICTURE_ID)){
             currentPictureId = new StringBuilder(savedInstanceState.getString(CURRENT_PICTURE_ID));
-            GENDER = savedInstanceState.getString(HomeActivity.PICTURES_TYPE_KEY);
-            TYPE = savedInstanceState.getString(HomeActivity.TYPE_OF_CONTENT_KEY);
-            ORDER = savedInstanceState.getString(HomeActivity.ORDER_TYPE_KEY);
             new ImageLoader(imageView, scoreTextView, sHeight, sWidth)
                     .execute(WEB_SERVICE, currentPictureId.toString());
         } else {
@@ -101,9 +95,6 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
     protected void onSaveInstanceState(Bundle icicle) {
         super.onSaveInstanceState(icicle);
         icicle.putString(CURRENT_PICTURE_ID, currentPictureId.toString());
-        icicle.putString(HomeActivity.PICTURES_TYPE_KEY, GENDER);
-        icicle.putString(HomeActivity.TYPE_OF_CONTENT_KEY, TYPE);
-        icicle.putString(HomeActivity.ORDER_TYPE_KEY, ORDER);
     }
 
     public void onArrowClick(View v){
@@ -157,67 +148,6 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
                 .execute(WEB_SERVICE, currentPictureId.toString());
     }
 
-    public void onMenuButtonClick(View v){
-        transaction = fragmentManager.beginTransaction();
-        if(menuVisibility){
-            transaction.hide(menuFragment).commit();
-        } else {
-            transaction.show(menuFragment).commit();
-        }
-        menuVisibility = !menuVisibility;
-    }
-
-    /* Fragment Buttons */
-
-    public void onGenderButtonClick(View v){
-        Intent intent = new Intent(this, GalleryActivity.class);
-        if(GENDER.equals("MALE")){
-            intent.putExtra(HomeActivity.PICTURES_TYPE_KEY, "FEMALE");
-        } else {
-            intent.putExtra(HomeActivity.PICTURES_TYPE_KEY, "MALE");
-        }
-        intent.putExtra(HomeActivity.TYPE_OF_CONTENT_KEY, TYPE);
-        intent.putExtra(HomeActivity.ORDER_TYPE_KEY, ORDER);
-        startActivity(intent);
-    }
-
-    public void nsfwButtonClick(View v){
-        Intent intent = new Intent(this, GalleryActivity.class);
-        if(TYPE.equals(HomeActivity.NSFW)){
-            intent.putExtra(HomeActivity.TYPE_OF_CONTENT_KEY, HomeActivity.SFW);
-        } else {
-            intent.putExtra(HomeActivity.TYPE_OF_CONTENT_KEY, HomeActivity.NSFW);
-        }
-        intent.putExtra(HomeActivity.PICTURES_TYPE_KEY, GENDER);
-        intent.putExtra(HomeActivity.ORDER_TYPE_KEY, ORDER);
-        startActivity(intent);
-    }
-
-    public void orderButtonClick(View v){
-        Intent intent = new Intent(this, GalleryActivity.class);
-        if(ORDER.equals(Order.ORDERED)){
-            intent.putExtra(HomeActivity.ORDER_TYPE_KEY, Order.RANDOMIZED.toString());
-        } else {
-            intent.putExtra(HomeActivity.ORDER_TYPE_KEY, Order.ORDERED.toString());
-        }
-        intent.putExtra(HomeActivity.PICTURES_TYPE_KEY, GENDER);
-        intent.putExtra(HomeActivity.TYPE_OF_CONTENT_KEY, TYPE);
-        startActivity(intent);
-    }
-
-    public void openFavoritesButtonClick(View v){
-        Intent intent = null;
-        switch (v.getId()){
-            case R.id.favorite:
-                intent = new Intent(this, FavoriteActivity.class);
-                break;
-            case R.id.my_profile:
-                intent = new Intent(this, MyProfileActivity.class);
-                break;
-        }
-        startActivity(intent);
-    }
-
     @Override
     protected void onResume() {
         dataSource.open();
@@ -231,34 +161,5 @@ public class GalleryActivity extends Activity implements MenuFragment.OnFragment
     protected void onPause() {
         dataSource.close();
         super.onPause();
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    private void setFragmentButtonTest(){
-        Button genderButton = (Button) findViewById(R.id.gender);
-        Button nsfwButton = (Button) findViewById(R.id.nsfw);
-        Button orderButton = (Button) findViewById(R.id.get_new);
-
-        if(GENDER.equals("MALE")){
-            genderButton.setText("Switch to female");
-        } else {
-            genderButton.setText("Switch to male");
-        }
-
-        if(TYPE.equals(HomeActivity.NSFW)){
-            nsfwButton.setText("Switch to SFW");
-        } else {
-            nsfwButton.setText("Switch to NSFW");
-        }
-
-        if(ORDER.equals(Order.ORDERED.toString())){
-            orderButton.setText("Randomise");
-        } else {
-            orderButton.setText("Get new");
-        }
     }
 }

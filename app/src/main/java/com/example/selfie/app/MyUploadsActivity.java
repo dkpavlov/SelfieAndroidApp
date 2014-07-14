@@ -1,23 +1,20 @@
 package com.example.selfie.app;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
 
-import com.example.selfie.app.R;
+import com.example.selfie.app.fragments.MenuFragment;
+import com.example.selfie.utils.MyPreferencesManager;
+import com.example.selfie.utils.Order;
 import com.example.selfie.utils.data.MySelfie;
-import com.example.selfie.utils.data.Selfie;
 import com.example.selfie.utils.data.SelfieDataSource;
-import com.example.selfie.utils.favorite.ImageAdapter;
 import com.example.selfie.utils.upload.MySelfiesAddapter;
 
 import java.util.List;
 
-public class MyUploadsActivity extends Activity {
+public class MyUploadsActivity extends MyMenuActivity {
 
     private SelfieDataSource dataSource;
     private GridView gridView;
@@ -34,8 +31,20 @@ public class MyUploadsActivity extends Activity {
         sHeight = metrics.heightPixels;
         sWidth = metrics.widthPixels;
 
+        preferencesManager = new MyPreferencesManager(this);
         dataSource = new SelfieDataSource(this);
         dataSource.open();
+
+        GENDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_GENDER, "FEMALE");
+        TYPE = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_TYPE, "SFW");
+        ORDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_ORDER, Order.RANDOMIZED.toString());
+
+        fragmentManager = getFragmentManager();
+        menuFragment = (MenuFragment) fragmentManager.findFragmentById(R.id.menu_fragment_my_uploads);
+        transaction = fragmentManager.beginTransaction();
+        transaction.hide(menuFragment);
+        transaction.commit();
+        setFragmentButtonTest();
 
         List<MySelfie> selfieList = dataSource.getAllMySelfies();
         gridView = (GridView) findViewById(R.id.my_uploads_grid_view);
@@ -49,6 +58,9 @@ public class MyUploadsActivity extends Activity {
     @Override
     protected void onResume() {
         dataSource.open();
+        transaction = fragmentManager.beginTransaction();
+        transaction.hide(menuFragment).commit();
+        menuVisibility = false;
         super.onResume();
     }
 

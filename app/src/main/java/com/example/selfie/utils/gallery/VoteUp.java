@@ -7,6 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.selfie.utils.BitmapAndString;
+import com.example.selfie.utils.MyAccountManager;
 import com.example.selfie.utils.http.MyHttpClient;
 
 import java.util.HashMap;
@@ -15,7 +16,7 @@ import java.util.Map;
 /**
  * Created by dpavlov on 11.7.2014 г..
  */
-public class VoteUp extends AsyncTask<String, Void, Boolean> {
+public class VoteUp extends AsyncTask<String, Void, Integer> {
 
     Context context;
     TextView textView;
@@ -26,29 +27,26 @@ public class VoteUp extends AsyncTask<String, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(String... args) {
-
-        //TODO check if you voted for this picture
+    protected Integer doInBackground(String... args) {
         String baseURL = args[0];
         String pictureId = args[1];
         Map<String, String> values = new HashMap<String, String>();
         values.put("id", pictureId.toString());
+        values.put("email", MyAccountManager.getFirstGoogleAccUsername(context));
         int responseCode = MyHttpClient.makeHttpPost(baseURL + "/voteUp/vote", null, values);
-        if(responseCode == 200){
-            return true;
-        } else {
-            return false;
-        }
+        return Integer.valueOf(responseCode);
     }
 
-    protected void onPostExecute(Boolean result) {
-        if(result){
+    protected void onPostExecute(Integer result) {
+        if(result.equals(200)){
             Integer score = Integer.valueOf((String) textView.getText());
             Integer newScore = score + 1;
             textView.setText(newScore.toString());
             Toast.makeText(context, "Thank you for voting", Toast.LENGTH_LONG).show();
-        } else {
+        } else if (result.equals(403)) {
             Toast.makeText(context, "You already voted", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(context, "ERROR", Toast.LENGTH_LONG).show();
         }
     }
 }

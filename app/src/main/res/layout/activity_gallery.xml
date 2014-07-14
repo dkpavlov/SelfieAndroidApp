@@ -6,13 +6,10 @@
 
 
     <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/galleryMainImage"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:scaleType="centerCrop"/>
+        android:layout_centerInParent="true"/>
 
     <fragment
         class="com.example.selfie.app.fragments.MenuFragment"
@@ -141,7 +138,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="93"
+        android:text="0"
         android:textColor="#FFFFFF"
         android:padding="10dp"
         android:background="@drawable/round_red_shape"

@@ -4,10 +4,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.net.Uri;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -24,8 +26,6 @@ public class ScaleBitmap {
 
     public static Bitmap decodeBitmapSize(InputStream is, int height, int width) throws IOException{
 
-        //we will return this Bitmap
-        Bitmap b = null;
         byte[] bytes = iSToBytes(is);
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -37,7 +37,13 @@ public class ScaleBitmap {
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
-        b = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+    }
+
+    public static Bitmap decodeUriToScaledBitmap(Context context, Uri uri, int height, int width) throws IOException{
+        Bitmap b = null;
+        InputStream is = context.getContentResolver().openInputStream(uri);
+        b = decodeBitmapSize(is, height, width);
         return b;
     }
 

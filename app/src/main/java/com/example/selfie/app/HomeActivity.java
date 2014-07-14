@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.selfie.utils.MyAccountManager;
+import com.example.selfie.utils.MyPreferencesManager;
 import com.example.selfie.utils.Order;
 import com.example.selfie.utils.http.MyHttpClient;
 
@@ -28,16 +30,17 @@ public class HomeActivity extends Activity {
     public static final String NSFW = "NSFW";
     public static final String SFW = "SFW";
 
-    public static final String NEWEST = "NEWEST";
-
     TextView textView;
     Button girlsButton;
     Button boysButton;
+
+    MyPreferencesManager preferencesManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        preferencesManager = new MyPreferencesManager(this);
     }
 
     public void onButtonClick(View v){
@@ -55,11 +58,8 @@ public class HomeActivity extends Activity {
                     picturesType = "MALE";
                     break;
             }
-
+            preferencesManager.setPreferences(MyPreferencesManager.SELFIE_GENDER, picturesType);
             Intent intent = new Intent(this, GalleryActivity.class);
-            intent.putExtra(TYPE_OF_CONTENT_KEY, SFW);
-            intent.putExtra(ORDER_TYPE_KEY, Order.RANDOMIZED.toString());
-            intent.putExtra(PICTURES_TYPE_KEY, picturesType);
             startActivity(intent);
         }
     }

@@ -45,6 +45,15 @@
             android:id="@+id/textView" />
     </RelativeLayout>
 
+    <fragment
+        class="com.example.selfie.app.fragments.MenuFragment"
+        android:id="@+id/menu_fragment_my_uploads"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_menu"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"/>
+
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/my_uploads_grid_view"
         android:layout_width="wrap_content"

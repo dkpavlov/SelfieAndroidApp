@@ -11,13 +11,16 @@ import android.widget.GridLayout;
 import android.widget.GridView;
 
 import com.example.selfie.app.R;
+import com.example.selfie.app.fragments.MenuFragment;
+import com.example.selfie.utils.MyPreferencesManager;
+import com.example.selfie.utils.Order;
 import com.example.selfie.utils.data.Selfie;
 import com.example.selfie.utils.data.SelfieDataSource;
 import com.example.selfie.utils.favorite.ImageAdapter;
 
 import java.util.List;
 
-public class FavoriteActivity extends Activity {
+public class FavoriteActivity extends MyMenuActivity {
 
     private SelfieDataSource dataSource;
     private GridView gridView;
@@ -27,8 +30,20 @@ public class FavoriteActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
 
+        preferencesManager = new MyPreferencesManager(this);
         dataSource = new SelfieDataSource(this);
         dataSource.open();
+
+        GENDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_GENDER, "FEMALE");
+        TYPE = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_TYPE, "SFW");
+        ORDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_ORDER, Order.RANDOMIZED.toString());
+
+        fragmentManager = getFragmentManager();
+        menuFragment = (MenuFragment) fragmentManager.findFragmentById(R.id.menuFragment);
+        transaction = fragmentManager.beginTransaction();
+        transaction.hide(menuFragment);
+        transaction.commit();
+        setFragmentButtonTest();
 
         List<Selfie> selfieList = dataSource.getAllSelfis();
         gridView = (GridView) findViewById(R.id.favorite_grid_view);
@@ -42,6 +57,9 @@ public class FavoriteActivity extends Activity {
     @Override
     protected void onResume() {
         dataSource.open();
+        transaction = fragmentManager.beginTransaction();
+        transaction.hide(menuFragment).commit();
+        menuVisibility = false;
         super.onResume();
     }
 

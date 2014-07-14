@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.selfie.app.FavoriteActivity">
 
     <RelativeLayout
         android:orientation="vertical"
@@ -44,6 +48,15 @@
             android:id="@+id/textView" />
     </RelativeLayout>
 
+    <fragment
+        class="com.example.selfie.app.fragments.MenuFragment"
+        android:id="@+id/menuFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_menu"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"/>
+
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/favorite_grid_view"
         android:layout_width="wrap_content"
@@ -59,7 +72,5 @@
         android:gravity="center"
         android:layout_below="@+id/menu_bar"
         android:stretchMode="columnWidth" />
-
-
 
 </RelativeLayout>

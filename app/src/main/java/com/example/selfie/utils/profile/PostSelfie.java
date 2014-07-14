@@ -7,6 +7,7 @@ import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -68,7 +69,7 @@ public class PostSelfie extends AsyncTask<String, Void, Boolean> {
                 dataSource.createMySelfie(picturId, fileName);
                 return true;
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e("LOG_KEY", e.getMessage());
             } finally {
                 dataSource.close();
             }

@@ -7,12 +7,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MyProfileActivity extends Activity {
+import com.example.selfie.app.fragments.MenuFragment;
+import com.example.selfie.utils.MyPreferencesManager;
+import com.example.selfie.utils.Order;
+
+public class MyProfileActivity extends MyMenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
+
+        preferencesManager = new MyPreferencesManager(this);
+
+        GENDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_GENDER, "FEMALE");
+        TYPE = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_TYPE, "SFW");
+        ORDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_ORDER, Order.RANDOMIZED.toString());
+
+        fragmentManager = getFragmentManager();
+        menuFragment = (MenuFragment) fragmentManager.findFragmentById(R.id.menuFragment);
+        transaction = fragmentManager.beginTransaction();
+        transaction.hide(menuFragment);
+        transaction.commit();
+        setFragmentButtonTest();
     }
 
     public void onButtonClick(View v){
@@ -26,6 +43,14 @@ public class MyProfileActivity extends Activity {
                 break;
         }
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        transaction = fragmentManager.beginTransaction();
+        transaction.hide(menuFragment).commit();
+        menuVisibility = false;
+        super.onResume();
     }
 
     public void backMyProfile(View v){
