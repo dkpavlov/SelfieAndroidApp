@@ -5,56 +5,6 @@
     tools:context="com.example.selfie.app.UploadActivity">
 
     <RelativeLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:id="@+id/menu_bar"
-        android:background="#e9525a">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/back_button_upload"
-            android:src="@drawable/back"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:padding="10dp"
-            android:background="@null"
-            android:onClick="backUpload"/>
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/menu_button"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/menu_trans"
-            android:background="@null"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentEnd="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="upload photo"
-            android:textColor="#FFFFFF"
-            android:textSize="26dp"
-            android:layout_centerInParent="true"
-            android:id="@+id/textView" />
-    </RelativeLayout>
-
-    <fragment
-        class="com.example.selfie.app.fragments.MenuFragment"
-        android:id="@+id/menu_fragment_upload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_menu"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"/>
-
-    <RelativeLayout
         android:layout_width="140dp"
         android:layout_height="120dp"
         android:layout_below="@+id/menu_bar"
@@ -140,79 +90,79 @@
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true">
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="10"
-                android:layout_below="@+id/menu_bar"
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:layout_below="@+id/menu_bar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:id="@+id/woman_gender"
+            android:clickable="true"
+            android:onClick="genderSelect">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/woman_gender_image"
+                android:scaleType="centerCrop"
+                android:src="@drawable/woman_small"
+                android:layout_centerInParent="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:id="@+id/woman_gender"
-                android:clickable="true"
-                android:onClick="genderSelect">
+                android:layout_marginTop="20dp" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/woman_gender_image"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/woman_small"
-                    android:layout_centerInParent="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/woman_gender_check"
+                android:background="@null"
+                android:src="@drawable/check_mark"
+                android:layout_alignTop="@+id/woman_gender_image"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="invisible"/>
+        </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/woman_gender_check"
-                    android:background="@null"
-                    android:src="@drawable/delete"
-                    android:layout_alignTop="@+id/woman_gender_image"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:visibility="invisible"/>
-            </RelativeLayout>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1" />
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:layout_below="@+id/menu_bar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:id="@+id/men_gender"
+            android:clickable="true"
+            android:onClick="genderSelect">
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="10"
-                android:layout_below="@+id/menu_bar"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/men_gender_image"
+                android:scaleType="centerCrop"
+                android:layout_centerInParent="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:id="@+id/men_gender"
-                android:clickable="true"
-                android:onClick="genderSelect">
+                android:src="@drawable/men_small"
+                android:layout_marginTop="20dp" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/men_gender_image"
-                    android:scaleType="centerCrop"
-                    android:layout_centerInParent="true"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/men_small"
-                    android:layout_marginTop="20dp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/men_gender_check"
+                android:background="@null"
+                android:src="@drawable/check_mark"
+                android:layout_alignTop="@+id/men_gender_image"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="invisible"/>
+        </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/men_gender_check"
-                    android:background="@null"
-                    android:src="@drawable/delete"
-                    android:layout_alignTop="@+id/men_gender_image"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:visibility="invisible"/>
-            </RelativeLayout>
-
-        </LinearLayout>
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -247,7 +197,65 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
+    <fragment
+        class="com.example.selfie.app.fragments.MenuFragment"
+        android:id="@+id/menu_fragment_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_menu"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"/>
 
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:id="@+id/menu_bar"
+        android:background="#e9525a">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/back_button_upload"
+            android:src="@drawable/back"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:padding="15dp"
+            android:background="@null"
+            android:onClick="backUpload"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/menu_button"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/menu_trans"
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="15dp"
+            android:layout_alignParentEnd="true"
+            android:onClick="onMenuButtonClick"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="upload photo"
+            android:textColor="#FFFFFF"
+            android:textSize="26dp"
+            android:layout_centerInParent="true"
+            android:id="@+id/textView" />
+    </RelativeLayout>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress_bar_upload"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
 
 
 </RelativeLayout>

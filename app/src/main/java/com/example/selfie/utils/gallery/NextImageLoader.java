@@ -3,7 +3,9 @@ package com.example.selfie.utils.gallery;
 import android.os.AsyncTask;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.selfie.utils.BitmapAndString;
@@ -19,12 +21,14 @@ public class NextImageLoader extends AsyncTask<String, Void, BitmapAndString> {
     ImageView bmImage;
     StringBuilder pictureId;
     TextView scoreTextView;
+    ProgressBar progressBar;
     int sHeight, sWidth;
 
-    public NextImageLoader(ImageView bmImage, StringBuilder pictureId, TextView scoreTextView, int sHeight, int sWidth) {
+    public NextImageLoader(ImageView bmImage, StringBuilder pictureId, TextView scoreTextView, ProgressBar progressBar, int sHeight, int sWidth) {
         this.pictureId = pictureId;
         this.bmImage = bmImage;
         this.scoreTextView = scoreTextView;
+        this.progressBar = progressBar;
         this.sHeight = sHeight;
         this.sWidth = sWidth;
     }
@@ -51,6 +55,7 @@ public class NextImageLoader extends AsyncTask<String, Void, BitmapAndString> {
     protected void onPostExecute(BitmapAndString result) {
         pictureId.replace(0, pictureId.length(), result.getStr());
         bmImage.setImageBitmap(result.getBitmap());
+        progressBar.setVisibility(View.GONE);
         scoreTextView.setText(result.getScore());
     }
 }

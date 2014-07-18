@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.selfie.utils.BitmapAndString;
@@ -21,13 +22,16 @@ public class InitialImageLoader extends AsyncTask<String, Void, BitmapAndString>
     StringBuilder pictureId;
     ImageView imageView;
     TextView scoreTextView;
+    ProgressBar progressBar;
+
     int sHeight, sWidth;
 
-    public InitialImageLoader(StringBuilder pictureId, ImageView imageView, TextView scoreTextView,
+    public InitialImageLoader(StringBuilder pictureId, ImageView imageView, ProgressBar progressBar, TextView scoreTextView,
                               int sHeight, int sWidth) {
         this.pictureId = pictureId;
         this.imageView = imageView;
         this.scoreTextView = scoreTextView;
+        this.progressBar = progressBar;
         this.sHeight = sHeight;
         this.sWidth = sWidth;
     }
@@ -62,7 +66,7 @@ public class InitialImageLoader extends AsyncTask<String, Void, BitmapAndString>
         pictureId.replace(0, pictureId.length(), result.getStr());
         imageView.setImageBitmap(result.getBitmap());
         scoreTextView.setText(result.getScore());
-
+        progressBar.setVisibility(View.GONE);
     }
 
 

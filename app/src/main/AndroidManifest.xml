@@ -6,10 +6,11 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
+        android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
         <activity
             android:name=".SplashActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,39 +19,48 @@
         </activity>
         <activity
             android:name=".GalleryActivity"
-            android:label="@string/title_activity_gallery" >
+            android:label="@string/title_activity_gallery"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".CommentActivity"
-            android:label="@string/title_activity_comment" >
+            android:label="@string/title_activity_comment"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".FavoriteActivity"
-            android:label="@string/title_activity_favorite" >
+            android:label="@string/title_activity_favorite"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".PreviewFavoriteActivity"
-            android:label="@string/title_activity_preview_favorite" >
+            android:label="@string/title_activity_preview_favorite"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:label="@string/title_activity_home" >
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".UploadActivity"
-            android:label="@string/title_activity_profile" >
+            android:label="@string/title_activity_profile"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".MyProfileActivity"
-            android:label="@string/title_activity_my_profile" >
+            android:label="@string/title_activity_my_profile"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".MyUploadsActivity"
-            android:label="@string/title_activity_my_uploads" >
+            android:label="@string/title_activity_my_uploads"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".PreviewMyUploadActivity"
-            android:label="@string/title_activity_preview_my_upload" >
+            android:label="@string/title_activity_preview_my_upload"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

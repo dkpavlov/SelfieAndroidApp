@@ -6,12 +6,14 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.selfie.utils.BitmapAndString;
 import com.example.selfie.utils.http.MyHttpClient;
 import com.example.selfie.utils.ui.ScaleBitmap;
 
+import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -25,12 +27,14 @@ public class ImageLoader extends AsyncTask<String, Void, BitmapAndString> {
 
     ImageView imageView;
     TextView textView;
+    ProgressBar progressBar;
 
     int sWidth, sHeight;
 
-    public ImageLoader(ImageView imageView, TextView textView, int sHeight, int sWidth) {
+    public ImageLoader(ImageView imageView, TextView textView, ProgressBar progressBar, int sHeight, int sWidth) {
         this.imageView = imageView;
         this.textView = textView;
+        this.progressBar = progressBar;
         this.sHeight = sHeight;
         this.sWidth = sWidth;
     }
@@ -57,6 +61,7 @@ public class ImageLoader extends AsyncTask<String, Void, BitmapAndString> {
         if(result != null){
             textView.setText(result.getScore());
             imageView.setImageBitmap(result.getBitmap());
+            progressBar.setVisibility(View.GONE);
         }
     }
 }

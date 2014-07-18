@@ -111,4 +111,12 @@ android:id="@+id/my_uplode_score_view"
     android:layout_alignParentRight="true"
     android:layout_alignParentEnd="true" />
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/preview_my_upload_progress_bar"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

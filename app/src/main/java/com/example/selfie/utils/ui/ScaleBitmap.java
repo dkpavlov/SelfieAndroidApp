@@ -25,56 +25,59 @@ public class ScaleBitmap {
     }
 
     public static Bitmap decodeBitmapSize(InputStream is, int height, int width) throws IOException{
-
+        Log.e("Decode Bitmap Size", String.valueOf(System.nanoTime()));
         byte[] bytes = iSToBytes(is);
+        Log.e("Decode Bitmap Size", String.valueOf(System.nanoTime()));
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
 
-        // Calculate inSampleSize
         options.inSampleSize = calculateInSampleSize(options, width, height);
 
-        // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
-    }
-
-    public static Bitmap decodeUriToScaledBitmap(Context context, Uri uri, int height, int width) throws IOException{
-        Bitmap b = null;
-        InputStream is = context.getContentResolver().openInputStream(uri);
-        b = decodeBitmapSize(is, height, width);
+        Bitmap b = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
         return b;
     }
 
-    private static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
+    @Deprecated
+    public static Bitmap decodeBitmapSizeBufferedInputStream(BufferedInputStream bis, int height, int width) throws IOException{
+        bis.mark(2 * 1024 * 1024);
+
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(bis, null, options);
+
+        options.inSampleSize = calculateInSampleSize(options, width, height);
+
+        bis.reset();
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeStream(bis, null, options);
+    }
+
+    public static Bitmap decodeUriToScaledBitmap(Context context, Uri uri, int height, int width) throws IOException{
+        InputStream is = context.getContentResolver().openInputStream(uri);
+        return decodeBitmapSize(is, height, width);
+    }
+
+    private static int calculateInSampleSize(BitmapFactory.Options options,
+                                             int reqWidth,
+                                             int reqHeight) {
         final int height = options.outHeight;
         final int width = options.outWidth;
-        int inSampleSize = 2;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) > reqHeight
-                    && (halfWidth / inSampleSize) > reqWidth) {
-                inSampleSize *= 2;
-            }
+        int inSampleSize = 1;
+        final int maxSize = reqHeight * reqWidth;
+        while ((options.outWidth * options.outHeight) * (1 / Math.pow(inSampleSize, 2)) >
+                maxSize) {
+            inSampleSize *= 2;
         }
-
         return inSampleSize;
     }
 
     private static byte[] iSToBytes(InputStream is) throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-
         int nRead;
-        byte[] data = new byte[16384];
+        byte[] data = new byte[1024 * 1024]; //1MB
 
         while ((nRead = is.read(data, 0, data.length)) != -1) {
             buffer.write(data, 0, nRead);

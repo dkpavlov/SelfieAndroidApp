@@ -14,14 +14,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.selfie.app.fragments.MenuFragment;
+import com.example.selfie.utils.MyPreferencesManager;
+import com.example.selfie.utils.Order;
 import com.example.selfie.utils.comments.AddComment;
 import com.example.selfie.utils.comments.CommentAdapter;
 import com.example.selfie.utils.comments.GetComments;
 
 
-public class CommentActivity extends Activity {
+public class CommentActivity extends MyMenuActivity {
 
-    Button commentButtonSend;
     EditText commentText;
     ListView commentList;
 
@@ -35,6 +37,7 @@ public class CommentActivity extends Activity {
         setContentView(R.layout.activity_comment);
 
         currentSelfieId = getIntent().getStringExtra(GalleryActivity.SELFIE_ID_KAY);
+        preferencesManager = new MyPreferencesManager(this);
 
         Typeface exoTf = Typeface.createFromAsset(getAssets(), "fonts/Exo2-BoldItalic.ttf");
 
@@ -42,6 +45,16 @@ public class CommentActivity extends Activity {
         commentButtonSend.setTypeface(exoTf);
         commentButtonSend.setTextColor(Color.WHITE);
         commentButtonSend.setBackgroundColor(Color.parseColor("#18A432"));*/
+
+        GENDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_GENDER, "FEMALE");
+        TYPE = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_TYPE, "SFW");
+        ORDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_ORDER, Order.RANDOMIZED.toString());
+        fragmentManager = getFragmentManager();
+        menuFragment = (MenuFragment) fragmentManager.findFragmentById(R.id.menuFragment);
+        transaction = fragmentManager.beginTransaction();
+        transaction.hide(menuFragment);
+        transaction.commit();
+        setFragmentButtonTest();
 
         commentText = (EditText) findViewById(R.id.commentTextField);
         commentList = (ListView) findViewById(R.id.commentList);
@@ -61,6 +74,10 @@ public class CommentActivity extends Activity {
         new AddComment(commentAdapter, getApplicationContext())
                 .execute(GalleryActivity.WEB_SERVICE, commentBody, acc, currentSelfieId);
         commentText.setText("");
+    }
+
+    public void backComments(View v){
+        onBackPressed();
     }
 
 

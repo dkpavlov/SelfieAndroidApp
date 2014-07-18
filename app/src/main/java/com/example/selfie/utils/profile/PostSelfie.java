@@ -8,7 +8,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.selfie.utils.comments.Comment;
@@ -31,12 +33,14 @@ public class PostSelfie extends AsyncTask<String, Void, Boolean> {
     private SelfieDataSource dataSource;
     public static String LOG_KEY = "ADD-COMMENT";
     Context context;
+    ProgressBar progressBar;
     Bitmap bitmap;
 
 
-    public PostSelfie(Bitmap bitmap, Context context) {
+    public PostSelfie(Bitmap bitmap, Context context, ProgressBar progressBar) {
         this.context = context;
         this.bitmap = bitmap;
+        this.progressBar = progressBar;
     }
 
     @Override
@@ -78,6 +82,7 @@ public class PostSelfie extends AsyncTask<String, Void, Boolean> {
     }
 
     protected void onPostExecute(Boolean res) {
+        progressBar.setVisibility(View.GONE);
         if(res){
             Toast.makeText(context, "Selfie was uploaded!", Toast.LENGTH_LONG).show();
         } else {

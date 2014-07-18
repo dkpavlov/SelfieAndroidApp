@@ -112,6 +112,8 @@ public abstract class MyMenuActivity extends Activity implements MenuFragment.On
         startActivity(intent);
     }
 
+
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 

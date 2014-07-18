@@ -22,6 +22,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -175,10 +176,10 @@ public class MyHttpClient  {
 
 
         URLConnection urlConnection = url.openConnection();
-        InputStream in = urlConnection.getInputStream();
+        InputStream is = urlConnection.getInputStream();
         newPictureId = urlConnection.getHeaderField(HEADER_FOR_PICTURE_ID);
         score = urlConnection.getHeaderField(HEADER_FOR_PICTURE_SCORE);
-        return new BitmapAndString(ScaleBitmap.decodeBitmapSize(in, sHeight, sWidth), newPictureId, score);
+        return new BitmapAndString(ScaleBitmap.decodeBitmapSize(is, sHeight, sWidth), newPictureId, score);
     }
 
     public static BitmapAndString getNewestPicture(String gender,

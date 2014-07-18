@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.selfie.app.R;
@@ -30,6 +31,7 @@ public class PreviewMyUploadActivity extends Activity {
 
     ImageView imageView;
     TextView textView;
+    ProgressBar progressBar;
 
     String id = null;
     SelfieDataSource dataSource;
@@ -41,6 +43,7 @@ public class PreviewMyUploadActivity extends Activity {
 
         imageView = (ImageView) findViewById(R.id.my_uploads_preview_image_view);
         textView = (TextView) findViewById(R.id.my_uplode_score_view);
+        progressBar = (ProgressBar) findViewById(R.id.preview_my_upload_progress_bar);
 
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
@@ -52,7 +55,7 @@ public class PreviewMyUploadActivity extends Activity {
 
         dataSource = new SelfieDataSource(this);
 
-        new ImageLoader(imageView, textView, sHeight, sWidth)
+        new ImageLoader(imageView, textView, progressBar, sHeight, sWidth)
                 .execute(GalleryActivity.WEB_SERVICE, id);
     }
 

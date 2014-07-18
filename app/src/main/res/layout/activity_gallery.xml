@@ -6,9 +6,10 @@
 
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:id="@+id/galleryMainImage"
+        android:scaleType="centerCrop"
         android:layout_centerInParent="true"/>
 
     <fragment
@@ -18,7 +19,8 @@
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_menu"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignRight="@+id/imageButton3"
+        android:layout_alignEnd="@+id/imageButton3" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -146,4 +148,12 @@
         android:layout_above="@+id/relativeLayout"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/galleryProgressBar"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

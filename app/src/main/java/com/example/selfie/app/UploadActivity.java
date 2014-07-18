@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,19 +36,20 @@ import java.util.List;
 
 public class UploadActivity extends MyMenuActivity {
 
+    private static final String LOG_KEY = "Profile-Activity";
+
     ImageView imageView;
     ImageView maleCheckIcon;
     ImageView femaleCheckIcon;
     ImageButton removeImage;
     EditText emailValidation;
+    ProgressBar progressBar;
 
     Bitmap bitmap;
 
     private Uri selectedImageUri = null;
     private Uri outputFileUri;
     private String gender = "";
-
-    SelfieDataSource dataSource;
 
     private static final int PICTURE_REQUEST_CODE = 1;
 
@@ -62,6 +64,7 @@ public class UploadActivity extends MyMenuActivity {
         femaleCheckIcon = (ImageView) findViewById(R.id.woman_gender_check);
         removeImage = (ImageButton) findViewById(R.id.remove_image);
         emailValidation = (EditText) findViewById(R.id.validate_email);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar_upload);
 
         preferencesManager = new MyPreferencesManager(this);
 
@@ -88,17 +91,19 @@ public class UploadActivity extends MyMenuActivity {
                 openImageIntent();
                 break;
             case R.id.send_button:
-                String jpgBase64 = null;
-                try{
-                    jpgBase64 = FileUtil.uriToBase64(selectedImageUri, getApplicationContext());
 
-                } catch (IOException e) {
-                   Log.e("Profile-Activity", e.getMessage());
-                }
+
                 if(selectedImageUri == null || gender.equals("") || !isValidEmailAddress(emailValidation.getText().toString())){
                     Toast.makeText(getApplicationContext(), "Place select picture, gender and provide valid email", Toast.LENGTH_LONG).show();
                 } else {
-                    new PostSelfie(bitmap, getApplicationContext())
+                    progressBar.setVisibility(View.VISIBLE);
+                    String jpgBase64 = null;
+                    try{
+                        jpgBase64 = FileUtil.uriToBase64(selectedImageUri, getApplicationContext());
+                    } catch (IOException e) {
+                        Log.e(LOG_KEY, e.getMessage());
+                    }
+                    new PostSelfie(bitmap, getApplicationContext(), progressBar)
                             .execute(jpgBase64, gender, "SFW", GalleryActivity.WEB_SERVICE);
                 }
         }
