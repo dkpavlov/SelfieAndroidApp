@@ -42,7 +42,8 @@ public class GalleryActivity extends MyMenuActivity{
 
     private StringBuilder currentPictureId =  new StringBuilder("");
     private List<String> oldIds = new ArrayList<String>();
-    private int currentIndexInList = -1;
+    private int currentIndexInList = 0;
+    private boolean inList = false;
 
     ImageView imageView;
     TextView scoreTextView;
@@ -104,21 +105,35 @@ public class GalleryActivity extends MyMenuActivity{
         String nextId = null;
         switch (viewId){
             case R.id.back :
-                nextId = previousImageId(-1);
+                int dir = -1;
+                if(!inList){
+                    oldIds.add(currentPictureId.toString());
+                    currentIndexInList++;
+                    dir = -2;
+                }
+                inList = true;
+                nextId = imageIdFromList(dir);
                 if(nextId != null){
                     new ImageLoader(imageView, scoreTextView, progressBar, sHeight, sWidth)
                             .execute(WEB_SERVICE, nextId);
+                } else {
+                    progressBar.setVisibility(View.GONE);
                 }
                 break;
             case R.id.flowers :
-                if(currentIndexInList != -1){
-                    nextId = previousImageId(1);
+                if((currentIndexInList + 1) == (oldIds.size())){
+                    inList = false;
+                    currentIndexInList++;
+                }
+                if(inList){
+                    nextId = imageIdFromList(1);
                     new ImageLoader(imageView, scoreTextView, progressBar, sHeight, sWidth)
                             .execute(WEB_SERVICE, nextId);
                 } else {
                     String picId = currentPictureId.toString();
-                    if(!oldIds.isEmpty() && !oldIds.get(oldIds.size() - 1).equals(picId)){
+                    if(oldIds.isEmpty() || !oldIds.get(oldIds.size() - 1).equals(picId)){
                         oldIds.add(picId);
+                        currentIndexInList++;
                     }
                     new NextImageLoader(imageView, currentPictureId, scoreTextView, progressBar, sHeight, sWidth)
                             .execute(WEB_SERVICE, picId, GENDER, TYPE, "UP", ORDER);
@@ -177,20 +192,12 @@ public class GalleryActivity extends MyMenuActivity{
         super.onPause();
     }
 
-    private String previousImageId(int dir){
-        int nextIndexInList = currentIndexInList + dir;
-        if(oldIds.size() == 0 || nextIndexInList == -1){
-            return null;
+    private String imageIdFromList(int dir){
+        int nextCursor = currentIndexInList + dir;
+        if(oldIds.isEmpty() || nextCursor < 0){
+            return  null;
         }
-        if(nextIndexInList == oldIds.size() - 1){
-            currentIndexInList = -1;
-            return oldIds.get(oldIds.size() - 1);
-        }
-        if(currentIndexInList == -1){
-            oldIds.add(currentPictureId.toString());
-            currentIndexInList = oldIds.size() - 1;
-        }
-        currentIndexInList += dir;
-        return oldIds.get(currentIndexInList);
+        currentIndexInList = nextCursor;
+        return oldIds.get(nextCursor);
     }
 }
