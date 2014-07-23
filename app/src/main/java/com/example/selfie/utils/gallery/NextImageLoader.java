@@ -20,14 +20,18 @@ public class NextImageLoader extends AsyncTask<String, Void, BitmapAndString> {
     private static final String LOG_TAG = "NEW_IMAGE_LOADER";
     ImageView bmImage;
     StringBuilder pictureId;
-    TextView scoreTextView;
+    TextView scoreTextView, commentCountView, favoriteCountView;
     ProgressBar progressBar;
     int sHeight, sWidth;
 
-    public NextImageLoader(ImageView bmImage, StringBuilder pictureId, TextView scoreTextView, ProgressBar progressBar, int sHeight, int sWidth) {
+    public NextImageLoader(ImageView bmImage, StringBuilder pictureId,
+                           TextView scoreTextView, TextView commentCountView, TextView favoriteCountView,
+                           ProgressBar progressBar, int sHeight, int sWidth) {
         this.pictureId = pictureId;
         this.bmImage = bmImage;
         this.scoreTextView = scoreTextView;
+        this.commentCountView = commentCountView;
+        this.favoriteCountView = favoriteCountView;
         this.progressBar = progressBar;
         this.sHeight = sHeight;
         this.sWidth = sWidth;
@@ -57,5 +61,7 @@ public class NextImageLoader extends AsyncTask<String, Void, BitmapAndString> {
         bmImage.setImageBitmap(result.getBitmap());
         progressBar.setVisibility(View.GONE);
         scoreTextView.setText(result.getScore());
+        commentCountView.setText(result.getCommentCount());
+        favoriteCountView.setText(result.getFavoriteCount());
     }
 }

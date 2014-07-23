@@ -26,14 +26,18 @@ public class ImageLoader extends AsyncTask<String, Void, BitmapAndString> {
     private static final String LOG_TAG = "IMAGE_LOADER";
 
     ImageView imageView;
-    TextView textView;
+    TextView textView, commentCountView, favoriteCountView;
     ProgressBar progressBar;
 
     int sWidth, sHeight;
 
-    public ImageLoader(ImageView imageView, TextView textView, ProgressBar progressBar, int sHeight, int sWidth) {
+    public ImageLoader(ImageView imageView,
+                       TextView textView, TextView commentCountView, TextView favoriteCountView,
+                       ProgressBar progressBar, int sHeight, int sWidth) {
         this.imageView = imageView;
         this.textView = textView;
+        this.commentCountView = commentCountView;
+        this.favoriteCountView = favoriteCountView;
         this.progressBar = progressBar;
         this.sHeight = sHeight;
         this.sWidth = sWidth;
@@ -43,14 +47,17 @@ public class ImageLoader extends AsyncTask<String, Void, BitmapAndString> {
     protected BitmapAndString doInBackground(String... args) {
         String baseUrl = args[0];
         String pictureId = args[1];
+        String picturId, score, commentCount, favoriteCount;
         try {
             URL url = new java.net.URL(baseUrl + "/img/img/" + pictureId);
             URLConnection urlConnection = url.openConnection();
-            String picturId = urlConnection.getHeaderField(MyHttpClient.HEADER_FOR_PICTURE_ID);
-            String score = urlConnection.getHeaderField(MyHttpClient.HEADER_FOR_PICTURE_SCORE);
+            picturId = urlConnection.getHeaderField(MyHttpClient.HEADER_FOR_PICTURE_ID);
+            score = urlConnection.getHeaderField(MyHttpClient.HEADER_FOR_PICTURE_SCORE);
+            commentCount = urlConnection.getHeaderField(MyHttpClient.HEADER_FOR_PICTURE_COMMENT_COUNT);
+            favoriteCount = urlConnection.getHeaderField(MyHttpClient.HEADER_FOR_PICTURE_FAVORITE_COUNT);
             InputStream is = urlConnection.getInputStream();
             Bitmap scaledBitmap = ScaleBitmap.decodeBitmapSize(is, sHeight, sWidth);
-            return new BitmapAndString(scaledBitmap, pictureId, score);
+            return new BitmapAndString(scaledBitmap, pictureId, score, commentCount, favoriteCount);
         } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage());
         }
@@ -60,6 +67,8 @@ public class ImageLoader extends AsyncTask<String, Void, BitmapAndString> {
     protected void onPostExecute(BitmapAndString result) {
         if(result != null){
             textView.setText(result.getScore());
+            commentCountView.setText(result.getCommentCount());
+            favoriteCountView.setText(result.getFavoriteCount());
             imageView.setImageBitmap(result.getBitmap());
             progressBar.setVisibility(View.GONE);
         }

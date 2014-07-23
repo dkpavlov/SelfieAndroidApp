@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.example.selfie.app.fragments.MenuFragment;
 import com.example.selfie.utils.MyPreferencesManager;
@@ -19,6 +20,8 @@ public class MyProfileActivity extends MyMenuActivity {
         setContentView(R.layout.activity_my_profile);
 
         preferencesManager = new MyPreferencesManager(this);
+
+        background = (ImageButton) findViewById(R.id.menu_background_my_profile);
 
         GENDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_GENDER, "FEMALE");
         TYPE = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_TYPE, "SFW");

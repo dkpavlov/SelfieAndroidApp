@@ -23,6 +23,15 @@
         android:layout_below="@+id/menu_bar"
         android:stretchMode="columnWidth" />
 
+    <ImageButton
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/menu_background_favorite"
+        android:background="@null"
+        android:layout_centerInParent="true"
+        android:onClick="onMenuBackgroundClick"
+        android:visibility="gone"/>
+
     <fragment
         class="com.example.selfie.app.fragments.MenuFragment"
         android:id="@+id/menuFragment"
@@ -61,7 +70,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="15dp"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:onClick="onMenuButtonClick"/>
 
         <TextView
             android:layout_width="wrap_content"

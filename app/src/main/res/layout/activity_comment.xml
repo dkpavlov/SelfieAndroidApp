@@ -7,6 +7,52 @@
     android:focusableInTouchMode="true"
     tools:context="com.example.selfie.app.CommentActivity">
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/commentList"
+        android:layout_below="@+id/menu_bar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/linearLayout" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/linearLayout">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="wrap_content"
+            android:id="@+id/commentTextField"
+            android:layout_gravity="bottom" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:text="@string/comment_button_send"
+            android:id="@+id/commentButtonSend"
+            android:onClick="onCommentSendClick"
+            android:background="@drawable/round_button_blue"
+            android:textColor="#FFFFFF"/>
+    </LinearLayout>>
+
+    <ImageButton
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/menu_background_comments"
+        android:background="@null"
+        android:layout_centerInParent="true"
+        android:onClick="onMenuBackgroundClick"
+        android:visibility="gone"/>
+
     <fragment
         class="com.example.selfie.app.fragments.MenuFragment"
         android:id="@+id/menuFragment"
@@ -57,42 +103,5 @@
             android:layout_centerInParent="true"
             android:id="@+id/textView" />
     </RelativeLayout>
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/commentList"
-        android:layout_below="@+id/menu_bar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/linearLayout" />
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/linearLayout">
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_weight="5"
-            android:layout_height="wrap_content"
-            android:id="@+id/commentTextField"
-            android:layout_gravity="bottom" />
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:textSize="14dp"
-            android:text="@string/comment_button_send"
-            android:id="@+id/commentButtonSend"
-            android:onClick="onCommentSendClick"
-            android:background="@drawable/round_button_blue"
-            android:textColor="#FFFFFF"/>
-    </LinearLayout>>
 
 </RelativeLayout>

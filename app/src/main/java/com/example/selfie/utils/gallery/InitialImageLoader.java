@@ -22,11 +22,14 @@ public class InitialImageLoader extends AsyncTask<String, Void, BitmapAndString>
     StringBuilder pictureId;
     ImageView imageView;
     TextView scoreTextView;
+    TextView commentCountView;
+    TextView favoriteCountView;
     ProgressBar progressBar;
 
     int sHeight, sWidth;
 
-    public InitialImageLoader(StringBuilder pictureId, ImageView imageView, ProgressBar progressBar, TextView scoreTextView,
+    public InitialImageLoader(StringBuilder pictureId, ImageView imageView, ProgressBar progressBar,
+                              TextView scoreTextView, TextView commentCountView, TextView favoriteCountView,
                               int sHeight, int sWidth) {
         this.pictureId = pictureId;
         this.imageView = imageView;
@@ -34,6 +37,8 @@ public class InitialImageLoader extends AsyncTask<String, Void, BitmapAndString>
         this.progressBar = progressBar;
         this.sHeight = sHeight;
         this.sWidth = sWidth;
+        this.commentCountView = commentCountView;
+        this.favoriteCountView = favoriteCountView;
     }
 
     protected BitmapAndString doInBackground(String... args) {
@@ -66,6 +71,8 @@ public class InitialImageLoader extends AsyncTask<String, Void, BitmapAndString>
         pictureId.replace(0, pictureId.length(), result.getStr());
         imageView.setImageBitmap(result.getBitmap());
         scoreTextView.setText(result.getScore());
+        commentCountView.setText(result.getCommentCount());
+        favoriteCountView.setText(result.getFavoriteCount());
         progressBar.setVisibility(View.GONE);
     }
 

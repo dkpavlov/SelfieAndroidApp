@@ -40,6 +40,8 @@ public class MyHttpClient  {
     public static final String LOG_TAG = "MY_HTTP_CLIENT";
     public static final String HEADER_FOR_PICTURE_ID = "Picture-id";
     public static final String HEADER_FOR_PICTURE_SCORE = "Picture-score";
+    public static final String HEADER_FOR_PICTURE_COMMENT_COUNT = "Picture-comments";
+    public static final String HEADER_FOR_PICTURE_FAVORITE_COUNT = "Picture-favorite";
 
     public static String makeHttpGet(String url){
         HttpResponse httpResponse;
@@ -156,7 +158,7 @@ public class MyHttpClient  {
                                                int sWidth) throws IOException {
 
         URL url = null;
-        String newPictureId, score;
+        String newPictureId, score, commentCount, favoriteCount;
         switch (order){
             case ORDERED:
                 url = new URL(baseURL + "/img/order"
@@ -173,13 +175,14 @@ public class MyHttpClient  {
                         + "/" + currentPictureId);
                 break;
         }
-
-
         URLConnection urlConnection = url.openConnection();
         InputStream is = urlConnection.getInputStream();
         newPictureId = urlConnection.getHeaderField(HEADER_FOR_PICTURE_ID);
         score = urlConnection.getHeaderField(HEADER_FOR_PICTURE_SCORE);
-        return new BitmapAndString(ScaleBitmap.decodeBitmapSize(is, sHeight, sWidth), newPictureId, score);
+        commentCount = urlConnection.getHeaderField(HEADER_FOR_PICTURE_COMMENT_COUNT);
+        favoriteCount = urlConnection.getHeaderField(HEADER_FOR_PICTURE_FAVORITE_COUNT);
+        return new BitmapAndString(ScaleBitmap.decodeBitmapSize(is, sHeight, sWidth),
+                newPictureId, score, commentCount, favoriteCount);
     }
 
     public static BitmapAndString getNewestPicture(String gender,
@@ -187,13 +190,16 @@ public class MyHttpClient  {
                                                    String baseURL,
                                                    int sHeight,
                                                    int sWidth) throws IOException {
+        String newPictureId, score, commentCount, favoriteCount;
         URL url = new URL(baseURL + "/img/new/order/"
                             + gender + "/"
                             + type);
         URLConnection urlConnection = url.openConnection();
-        String newPictureId = urlConnection.getHeaderField(HEADER_FOR_PICTURE_ID);
-        String score = urlConnection.getHeaderField(HEADER_FOR_PICTURE_SCORE);
+        newPictureId = urlConnection.getHeaderField(HEADER_FOR_PICTURE_ID);
+        score = urlConnection.getHeaderField(HEADER_FOR_PICTURE_SCORE);
+        commentCount = urlConnection.getHeaderField(HEADER_FOR_PICTURE_COMMENT_COUNT);
+        favoriteCount = urlConnection.getHeaderField(HEADER_FOR_PICTURE_FAVORITE_COUNT);
         Bitmap bitmap = ScaleBitmap.scale(sWidth, sHeight, BitmapFactory.decodeStream(urlConnection.getInputStream()));
-        return new BitmapAndString(bitmap, newPictureId, score);
+        return new BitmapAndString(bitmap, newPictureId, score, commentCount, favoriteCount);
     }
 }

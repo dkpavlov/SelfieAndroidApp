@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridLayout;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
 import com.example.selfie.app.R;
 import com.example.selfie.app.fragments.MenuFragment;
@@ -33,6 +34,8 @@ public class FavoriteActivity extends MyMenuActivity {
         preferencesManager = new MyPreferencesManager(this);
         dataSource = new SelfieDataSource(this);
         dataSource.open();
+
+        background = (ImageButton) findViewById(R.id.menu_background_favorite);
 
         GENDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_GENDER, "FEMALE");
         TYPE = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_TYPE, "SFW");

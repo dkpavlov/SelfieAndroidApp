@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
 import com.example.selfie.app.fragments.MenuFragment;
 import com.example.selfie.utils.MyPreferencesManager;
@@ -34,6 +35,8 @@ public class MyUploadsActivity extends MyMenuActivity {
         preferencesManager = new MyPreferencesManager(this);
         dataSource = new SelfieDataSource(this);
         dataSource.open();
+
+        background = (ImageButton) findViewById(R.id.menu_background_my_uploads);
 
         GENDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_GENDER, "FEMALE");
         TYPE = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_TYPE, "SFW");

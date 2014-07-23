@@ -30,7 +30,7 @@ public class PreviewMyUploadActivity extends Activity {
 
 
     ImageView imageView;
-    TextView textView;
+    TextView scoreView, commentView, favoriteView;
     ProgressBar progressBar;
 
     String id = null;
@@ -42,7 +42,9 @@ public class PreviewMyUploadActivity extends Activity {
         setContentView(R.layout.activity_preview_my_upload);
 
         imageView = (ImageView) findViewById(R.id.my_uploads_preview_image_view);
-        textView = (TextView) findViewById(R.id.my_uplode_score_view);
+        scoreView = (TextView) findViewById(R.id.my_uplode_score_view);
+        commentView = (TextView) findViewById(R.id.my_uplode_comment_count_view);
+        favoriteView = (TextView) findViewById(R.id.my_uplode_favorites_count_view);
         progressBar = (ProgressBar) findViewById(R.id.preview_my_upload_progress_bar);
 
         Intent intent = getIntent();
@@ -55,7 +57,7 @@ public class PreviewMyUploadActivity extends Activity {
 
         dataSource = new SelfieDataSource(this);
 
-        new ImageLoader(imageView, textView, progressBar, sHeight, sWidth)
+        new ImageLoader(imageView, scoreView, commentView, favoriteView, progressBar, sHeight, sWidth)
                 .execute(GalleryActivity.WEB_SERVICE, id);
     }
 
@@ -90,7 +92,7 @@ public class PreviewMyUploadActivity extends Activity {
     }
 
     public void onVoteUpButtonClick(View v){
-        new VoteUp(getApplicationContext(), textView)
+        new VoteUp(getApplicationContext(), scoreView)
                 .execute(GalleryActivity.WEB_SERVICE, id);
     }
 

@@ -4,6 +4,49 @@
     android:layout_height="match_parent"
     tools:context="com.example.selfie.app.MyProfileActivity">
 
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/space" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="#FFFFFF"
+        android:text="upload photo"
+        android:background="@drawable/round_button"
+        android:id="@+id/upload"
+        android:onClick="onButtonClick"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="#FFFFFF"
+        android:text="my uploads"
+        android:background="@drawable/round_button_blue"
+        android:id="@+id/my_uploads"
+        android:onClick="onButtonClick"
+        android:layout_below="@+id/upload"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="111dp" />
+
+    <ImageButton
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/menu_background_my_profile"
+        android:background="@null"
+        android:layout_centerInParent="true"
+        android:onClick="onMenuBackgroundClick"
+        android:visibility="gone"/>
+
     <fragment
         class="com.example.selfie.app.fragments.MenuFragment"
         android:id="@+id/menuFragment"
@@ -55,38 +98,6 @@
             android:id="@+id/textView" />
     </RelativeLayout>
 
-    <Space
-        android:layout_width="20px"
-        android:layout_height="20px"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/space" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textColor="#FFFFFF"
-        android:text="upload photo"
-        android:background="@drawable/round_button"
-        android:id="@+id/upload"
-        android:onClick="onButtonClick"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textColor="#FFFFFF"
-        android:text="my uploads"
-        android:background="@drawable/round_button_blue"
-        android:id="@+id/my_uploads"
-        android:onClick="onButtonClick"
-        android:layout_below="@+id/upload"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="111dp" />
 
 </RelativeLayout>

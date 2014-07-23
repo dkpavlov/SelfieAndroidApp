@@ -197,6 +197,24 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress_bar_upload"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
+
+    <ImageButton
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/menu_background_upload"
+        android:background="@null"
+        android:layout_centerInParent="true"
+        android:onClick="onMenuBackgroundClick"
+        android:visibility="gone"/>
+
     <fragment
         class="com.example.selfie.app.fragments.MenuFragment"
         android:id="@+id/menu_fragment_upload"
@@ -248,14 +266,7 @@
             android:id="@+id/textView" />
     </RelativeLayout>
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progress_bar_upload"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"/>
+
 
 
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -47,6 +48,8 @@ public class GalleryActivity extends MyMenuActivity{
 
     ImageView imageView;
     TextView scoreTextView;
+    TextView commentCountView;
+    TextView favoriteCountView;
     ProgressBar progressBar;
 
     int sHeight, sWidth;
@@ -72,7 +75,10 @@ public class GalleryActivity extends MyMenuActivity{
 
         imageView = (ImageView) findViewById(R.id.galleryMainImage);
         scoreTextView = (TextView) findViewById(R.id.score_view);
+        commentCountView = (TextView) findViewById(R.id.comment_count_view);
+        favoriteCountView = (TextView) findViewById(R.id.favorite_count_view);
         progressBar = (ProgressBar) findViewById(R.id.galleryProgressBar);
+        background = (ImageButton) findViewById(R.id.menu_background);
 
         fragmentManager = getFragmentManager();
         menuFragment = (MenuFragment) fragmentManager.findFragmentById(R.id.menuFragment);
@@ -84,10 +90,13 @@ public class GalleryActivity extends MyMenuActivity{
 
         if(savedInstanceState != null && savedInstanceState.containsKey(CURRENT_PICTURE_ID)){
             currentPictureId = new StringBuilder(savedInstanceState.getString(CURRENT_PICTURE_ID));
-            new ImageLoader(imageView, scoreTextView, progressBar, sHeight, sWidth)
+            new ImageLoader(imageView, scoreTextView, commentCountView, favoriteCountView,
+                            progressBar, sHeight, sWidth)
                     .execute(WEB_SERVICE, currentPictureId.toString());
         } else {
-            new InitialImageLoader(currentPictureId, imageView, progressBar, scoreTextView, sHeight, sWidth)
+            new InitialImageLoader(currentPictureId, imageView, progressBar,
+                                   scoreTextView, commentCountView, favoriteCountView,
+                                   sHeight, sWidth)
                     .execute(WEB_SERVICE, GENDER, TYPE, ORDER);
         }
     }
@@ -114,7 +123,8 @@ public class GalleryActivity extends MyMenuActivity{
                 inList = true;
                 nextId = imageIdFromList(dir);
                 if(nextId != null){
-                    new ImageLoader(imageView, scoreTextView, progressBar, sHeight, sWidth)
+                    new ImageLoader(imageView, scoreTextView, commentCountView, favoriteCountView,
+                                    progressBar, sHeight, sWidth)
                             .execute(WEB_SERVICE, nextId);
                 } else {
                     progressBar.setVisibility(View.GONE);
@@ -127,7 +137,8 @@ public class GalleryActivity extends MyMenuActivity{
                 }
                 if(inList){
                     nextId = imageIdFromList(1);
-                    new ImageLoader(imageView, scoreTextView, progressBar, sHeight, sWidth)
+                    new ImageLoader(imageView, scoreTextView, commentCountView, favoriteCountView,
+                                    progressBar, sHeight, sWidth)
                             .execute(WEB_SERVICE, nextId);
                 } else {
                     String picId = currentPictureId.toString();
@@ -135,7 +146,8 @@ public class GalleryActivity extends MyMenuActivity{
                         oldIds.add(picId);
                         currentIndexInList++;
                     }
-                    new NextImageLoader(imageView, currentPictureId, scoreTextView, progressBar, sHeight, sWidth)
+                    new NextImageLoader(imageView, currentPictureId, scoreTextView, commentCountView, favoriteCountView,
+                                        progressBar, sHeight, sWidth)
                             .execute(WEB_SERVICE, picId, GENDER, TYPE, "UP", ORDER);
                 }
                 break;

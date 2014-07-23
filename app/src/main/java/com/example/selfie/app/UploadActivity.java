@@ -65,6 +65,7 @@ public class UploadActivity extends MyMenuActivity {
         removeImage = (ImageButton) findViewById(R.id.remove_image);
         emailValidation = (EditText) findViewById(R.id.validate_email);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar_upload);
+        background = (ImageButton) findViewById(R.id.menu_background_upload);
 
         preferencesManager = new MyPreferencesManager(this);
 

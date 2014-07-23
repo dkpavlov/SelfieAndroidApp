@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.selfie.app.fragments.MenuFragment;
 import com.example.selfie.utils.MyPreferencesManager;
@@ -28,6 +30,8 @@ public abstract class MyMenuActivity extends Activity implements MenuFragment.On
     protected String GENDER;
     protected String TYPE;
     protected String ORDER;
+
+    protected ImageButton background;
 
     protected void setFragmentButtonTest(){
         Button genderButton = (Button) findViewById(R.id.gender);
@@ -57,10 +61,19 @@ public abstract class MyMenuActivity extends Activity implements MenuFragment.On
         transaction = fragmentManager.beginTransaction();
         if(menuVisibility){
             transaction.hide(menuFragment).commit();
+            background.setVisibility(View.GONE);
         } else {
             transaction.show(menuFragment).commit();
+            background.setVisibility(View.VISIBLE);
         }
         menuVisibility = !menuVisibility;
+    }
+
+    public void onMenuBackgroundClick(View v){
+        transaction = fragmentManager.beginTransaction();
+        transaction.hide(menuFragment).commit();
+        background.setVisibility(View.GONE);
+        menuVisibility = false;
     }
 
     public void onGenderButtonClick(View v){

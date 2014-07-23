@@ -13,10 +13,24 @@ public class BitmapAndString {
 
     private String score;
 
-    public BitmapAndString(Bitmap bitmap, String str, String score) {
+    private String commentCount;
+
+    private String favoriteCount;
+
+    public BitmapAndString(Bitmap bitmap, String str, String score, String commentCount, String favoriteCount) {
         this.bitmap = bitmap;
         this.str = str;
         this.score = score;
+        this.commentCount = commentCount;
+        this.favoriteCount = favoriteCount;
+    }
+
+    public String getCommentCount() {
+        return commentCount;
+    }
+
+    public String getFavoriteCount() {
+        return favoriteCount;
     }
 
     public String getScore() {

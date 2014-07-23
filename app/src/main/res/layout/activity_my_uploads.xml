@@ -20,6 +20,15 @@
         android:layout_below="@+id/menu_bar"
         android:stretchMode="columnWidth" />
 
+    <ImageButton
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/menu_background_my_uploads"
+        android:background="@null"
+        android:layout_centerInParent="true"
+        android:onClick="onMenuBackgroundClick"
+        android:visibility="gone"/>
+
     <fragment
         class="com.example.selfie.app.fragments.MenuFragment"
         android:id="@+id/menu_fragment_my_uploads"
