@@ -14,6 +14,7 @@ import com.example.selfie.utils.ui.ScaleBitmap;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -54,6 +55,21 @@ public class MyHttpClient  {
             Log.e(LOG_TAG, e.getMessage());
             return null;
         }
+    }
+
+    public static int makeHttpGetAndGetStatusCode(String url){
+        HttpResponse httpResponse;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(url);
+        try{
+            return httpClient.execute(httpGet).getStatusLine().getStatusCode();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
+
     }
 
     public static String makeHttpGetWithReturnJSON(String url,
