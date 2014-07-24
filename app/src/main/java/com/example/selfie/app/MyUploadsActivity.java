@@ -20,6 +20,8 @@ public class MyUploadsActivity extends MyMenuActivity {
     private SelfieDataSource dataSource;
     private GridView gridView;
     int sHeight, sWidth;
+    List<MySelfie> selfieList = null;
+    MySelfiesAddapter mySelfiesAddapter = null;
 
 
     @Override
@@ -49,9 +51,10 @@ public class MyUploadsActivity extends MyMenuActivity {
         transaction.commit();
         setFragmentButtonTest();
 
-        List<MySelfie> selfieList = dataSource.getAllMySelfies();
+        selfieList = dataSource.getAllMySelfies();
         gridView = (GridView) findViewById(R.id.my_uploads_grid_view);
-        gridView.setAdapter(new MySelfiesAddapter(selfieList, this, dataSource));
+        mySelfiesAddapter = new MySelfiesAddapter(selfieList, this, dataSource);
+        gridView.setAdapter(mySelfiesAddapter);
     }
 
     public void backMySelfies(View v){
@@ -71,6 +74,11 @@ public class MyUploadsActivity extends MyMenuActivity {
     protected void onPause() {
         dataSource.close();
         super.onPause();
+    }
+
+    public void removeMySelfieFromDBAndRefreshAdapter(String mySelfieId){
+        mySelfiesAddapter.removeItem(mySelfieId);
+        dataSource.deleteMySelfie(mySelfieId);
     }
 
 }

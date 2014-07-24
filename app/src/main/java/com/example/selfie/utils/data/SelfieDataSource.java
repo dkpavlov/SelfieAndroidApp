@@ -21,6 +21,10 @@ public class SelfieDataSource {
                                    SelfieSQLHelper.COLUMN_SELFIE_PATH,
                                    SelfieSQLHelper.COLUMN_SELFIE_THUMB_PATH};
 
+    private String[] allColumnsMySelfie = {SelfieSQLHelper.COLUMN_ID,
+                                           SelfieSQLHelper.COLUMN_MY_SELFIE_ID,
+                                           SelfieSQLHelper.COLUMN_SELFIE_THUMB_PATH};
+
     public SelfieDataSource(Context context){
         sqlHelper = new SelfieSQLHelper(context);
     }
@@ -70,10 +74,35 @@ public class SelfieDataSource {
         return null;
     }
 
+    public MySelfie findMySelfieById(long id){
+        Cursor cursor = database.query(SelfieSQLHelper.TABLE_MY_SELFIES, allColumnsMySelfie,
+                SelfieSQLHelper.COLUMN_MY_SELFIE_ID + " = '" + id + "'", null, null, null, null);
+        cursor.moveToFirst();
+        if(!cursor.isAfterLast()){
+            return cursorToMySelfie(cursor);
+        }
+        return null;
+    }
+
+    public MySelfie findMySelfieById(String id){
+        Cursor cursor = database.query(SelfieSQLHelper.TABLE_MY_SELFIES, allColumnsMySelfie,
+                SelfieSQLHelper.COLUMN_MY_SELFIE_ID + " = '" + id + "'", null, null, null, null);
+        cursor.moveToFirst();
+        if(!cursor.isAfterLast()){
+            return cursorToMySelfie(cursor);
+        }
+        return null;
+    }
+
     public void deleteSelfie(Selfie selfie){
         long id = selfie.getId();
         database.delete(SelfieSQLHelper.TABLE_FAVORITE_SELFIES, SelfieSQLHelper.COLUMN_ID
                 + " = " + id, null);
+    }
+
+    public void deleteMySelfie(String selfieId){
+        database.delete(SelfieSQLHelper.TABLE_MY_SELFIES, SelfieSQLHelper.COLUMN_MY_SELFIE_ID
+                + " = " + selfieId, null);
     }
 
     public List<Selfie> getAllSelfis(){

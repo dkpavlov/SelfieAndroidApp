@@ -10,9 +10,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 
+import com.example.selfie.app.GalleryActivity;
+import com.example.selfie.app.HomeActivity;
+import com.example.selfie.app.MyUploadsActivity;
 import com.example.selfie.app.PreviewFavoriteActivity;
 import com.example.selfie.app.PreviewMyUploadActivity;
 import com.example.selfie.app.R;
+import com.example.selfie.utils.data.DeleteSelfie;
 import com.example.selfie.utils.data.MySelfie;
 import com.example.selfie.utils.data.Selfie;
 import com.example.selfie.utils.data.SelfieDataSource;
@@ -29,15 +33,28 @@ import java.util.List;
 public class MySelfiesAddapter extends BaseAdapter{
 
     private static final String LOG_KEY = "IMAGE_ADAPTER";
-    private Context context;
+    private MyUploadsActivity activity;
     private SelfieDataSource dataSource;
     private List<MySelfie> mySelfiesList;
     private final MySelfiesAddapter mySelfiesAddapter = this;
 
-    public MySelfiesAddapter(List<MySelfie> selfieList, Context context, SelfieDataSource dataSource) {
+    public MySelfiesAddapter(List<MySelfie> selfieList, MyUploadsActivity activity, SelfieDataSource dataSource) {
         this.mySelfiesList = selfieList;
-        this.context = context;
+        this.activity = activity;
         this.dataSource = dataSource;
+    }
+
+    public void removeItem(String selfieId){
+        removeSelfieBySelfieId(selfieId);
+        mySelfiesAddapter.notifyDataSetChanged();
+    }
+
+    private void removeSelfieBySelfieId(String selfieId){
+        for(MySelfie s: mySelfiesList){
+            if(s.getSelfieId().equals(selfieId)){
+                mySelfiesList.remove(s);
+            }
+        }
     }
 
     @Override
@@ -61,12 +78,12 @@ public class MySelfiesAddapter extends BaseAdapter{
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.grid_cell, viewGroup, false);
+            view = LayoutInflater.from(activity).inflate(R.layout.grid_cell, viewGroup, false);
         }
         Bitmap bmp = null;
         final MySelfie selfie = getItem(i);
         try{
-            bmp = FileUtil.fileNameToBitmap(context, getItem(i).getThumbName());
+            bmp = FileUtil.fileNameToBitmap(activity, getItem(i).getThumbName());
         } catch (IOException e){
             Log.e(LOG_KEY, e.getMessage());
         }
@@ -77,19 +94,16 @@ public class MySelfiesAddapter extends BaseAdapter{
         rImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, PreviewMyUploadActivity.class);
+                Intent i = new Intent(activity, PreviewMyUploadActivity.class);
                 i.putExtra("id", selfie.getSelfieId());
-                context.startActivity(i);
+                activity.startActivity(i);
             }
         });
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //TODO
-                /*dataSource.deleteSelfie(selfie);
-                selfieList.remove(selfie);
-                imageAdapter.notifyDataSetChanged();*/
+                new DeleteSelfie(mySelfiesList, dataSource, mySelfiesAddapter, activity)
+                        .execute(GalleryActivity.WEB_SERVICE, String.valueOf(selfie.getSelfieId()));
             }
         });
         return view;

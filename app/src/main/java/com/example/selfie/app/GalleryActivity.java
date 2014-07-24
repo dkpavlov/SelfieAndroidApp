@@ -161,7 +161,7 @@ public class GalleryActivity extends MyMenuActivity{
     }
 
     public void onFavoriteButtonClick(View v){
-        new AddSelfieToFavorites(imageView, dataSource, getApplicationContext())
+        new AddSelfieToFavorites(imageView, favoriteCountView, dataSource, getApplicationContext())
                 .execute(currentPictureId.toString());
     }
 
@@ -212,4 +212,5 @@ public class GalleryActivity extends MyMenuActivity{
         currentIndexInList = nextCursor;
         return oldIds.get(nextCursor);
     }
+
 }

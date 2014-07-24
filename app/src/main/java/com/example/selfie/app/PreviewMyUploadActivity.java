@@ -68,7 +68,7 @@ public class PreviewMyUploadActivity extends Activity {
     }
 
     public void onFavoriteButtonClick(View v){
-        new AddSelfieToFavorites(imageView, dataSource, getApplicationContext())
+        new AddSelfieToFavorites(imageView, favoriteView, dataSource, getApplicationContext())
                 .execute(id);
     }
 

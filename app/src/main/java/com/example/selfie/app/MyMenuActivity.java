@@ -59,6 +59,8 @@ public abstract class MyMenuActivity extends Activity implements MenuFragment.On
 
     public void onMenuButtonClick(View v){
         transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(android.R.animator.fade_in,
+                                        android.R.animator.fade_out);
         if(menuVisibility){
             transaction.hide(menuFragment).commit();
             background.setVisibility(View.GONE);
@@ -71,6 +73,8 @@ public abstract class MyMenuActivity extends Activity implements MenuFragment.On
 
     public void onMenuBackgroundClick(View v){
         transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(android.R.animator.fade_in,
+                android.R.animator.fade_out);
         transaction.hide(menuFragment).commit();
         background.setVisibility(View.GONE);
         menuVisibility = false;
@@ -124,8 +128,6 @@ public abstract class MyMenuActivity extends Activity implements MenuFragment.On
         }
         startActivity(intent);
     }
-
-
 
     @Override
     public void onFragmentInteraction(Uri uri) {
