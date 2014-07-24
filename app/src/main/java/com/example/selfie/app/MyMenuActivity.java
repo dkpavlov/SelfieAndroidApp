@@ -107,7 +107,7 @@ public abstract class MyMenuActivity extends Activity implements MenuFragment.On
     public void orderButtonClick(View v){
         Intent intent = new Intent(this, GalleryActivity.class);
         String newOrder = null;
-        if(ORDER.equals(Order.ORDERED)){
+        if(ORDER.equals(Order.ORDERED.toString())){
             newOrder = Order.RANDOMIZED.toString();
         } else {
             newOrder = Order.ORDERED.toString();

@@ -12,6 +12,7 @@ public class MyPreferencesManager {
     public static final String SELFIE_TYPE = "SELFIE_TYPE";
     public static final String SELFIE_GENDER = "SELFIE_GENDER";
     public static final String SELFIE_ORDER = "SELFIE_ORDER";
+    public static final String GALLERY_HINTS = "GALLERY_HINTS";
 
     Context context;
     SharedPreferences settings;

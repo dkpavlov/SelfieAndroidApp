@@ -51,6 +51,7 @@ public class GalleryActivity extends MyMenuActivity{
     TextView commentCountView;
     TextView favoriteCountView;
     ProgressBar progressBar;
+    ImageButton hintsButton;
 
     int sHeight, sWidth;
 
@@ -64,6 +65,8 @@ public class GalleryActivity extends MyMenuActivity{
         GENDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_GENDER, "FEMALE");
         TYPE = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_TYPE, "SFW");
         ORDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_ORDER, Order.RANDOMIZED.toString());
+
+        String hints = preferencesManager.getPreferences(MyPreferencesManager.GALLERY_HINTS, "true");
 
         dataSource = new SelfieDataSource(this);
         dataSource.open();
@@ -79,6 +82,11 @@ public class GalleryActivity extends MyMenuActivity{
         favoriteCountView = (TextView) findViewById(R.id.favorite_count_view);
         progressBar = (ProgressBar) findViewById(R.id.galleryProgressBar);
         background = (ImageButton) findViewById(R.id.menu_background);
+        hintsButton = (ImageButton) findViewById(R.id.hints);
+
+        if(hints.equals("true")){
+            hintsButton.setVisibility(View.VISIBLE);
+        }
 
         fragmentManager = getFragmentManager();
         menuFragment = (MenuFragment) fragmentManager.findFragmentById(R.id.menuFragment);
@@ -187,6 +195,11 @@ public class GalleryActivity extends MyMenuActivity{
     public void onVoteUpButtonClick(View v){
         new VoteUp(getApplicationContext(), scoreTextView)
                 .execute(WEB_SERVICE, currentPictureId.toString());
+    }
+
+    public void onHintClick(View v){
+        hintsButton.setVisibility(View.GONE);
+        preferencesManager.setPreferences(MyPreferencesManager.GALLERY_HINTS, "false");
     }
 
     @Override

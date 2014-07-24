@@ -240,5 +240,17 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <ImageButton
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/hints"
+        android:scaleType="fitXY"
+        android:background="#000000"
+        android:alpha=".6"
+        android:src="@drawable/hints"
+        android:onClick="onHintClick"
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
+
 
 </RelativeLayout>
