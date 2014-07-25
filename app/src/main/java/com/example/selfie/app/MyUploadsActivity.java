@@ -1,5 +1,6 @@
 package com.example.selfie.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -38,7 +39,7 @@ public class MyUploadsActivity extends MyMenuActivity {
         dataSource = new SelfieDataSource(this);
         dataSource.open();
 
-        background = (ImageButton) findViewById(R.id.menu_background_my_uploads);
+        /*background = (ImageButton) findViewById(R.id.menu_background_my_uploads);
 
         GENDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_GENDER, "FEMALE");
         TYPE = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_TYPE, "SFW");
@@ -49,7 +50,7 @@ public class MyUploadsActivity extends MyMenuActivity {
         transaction = fragmentManager.beginTransaction();
         transaction.hide(menuFragment);
         transaction.commit();
-        setFragmentButtonTest();
+        setFragmentButtonTest();*/
 
         selfieList = dataSource.getAllMySelfies();
         gridView = (GridView) findViewById(R.id.my_uploads_grid_view);
@@ -64,9 +65,9 @@ public class MyUploadsActivity extends MyMenuActivity {
     @Override
     protected void onResume() {
         dataSource.open();
-        transaction = fragmentManager.beginTransaction();
+        /*transaction = fragmentManager.beginTransaction();
         transaction.hide(menuFragment).commit();
-        menuVisibility = false;
+        menuVisibility = false;*/
         super.onResume();
     }
 
@@ -79,6 +80,11 @@ public class MyUploadsActivity extends MyMenuActivity {
     public void removeMySelfieFromDBAndRefreshAdapter(String mySelfieId){
         mySelfiesAddapter.removeItem(mySelfieId);
         dataSource.deleteMySelfie(mySelfieId);
+    }
+
+    public void onCameraClickMyUploads(View v){
+        Intent intent = new Intent(this, UploadActivity.class);
+        startActivity(intent);
     }
 
 }

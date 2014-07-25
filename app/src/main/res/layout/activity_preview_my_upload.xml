@@ -26,15 +26,163 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="55dp"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="5dp">
+            android:layout_alignParentBottom="true">
 
-            <ImageButton
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/galleryMainImage"
+                android:layout_centerHorizontal="true">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageButton4"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/favorite"
+                    android:onClick="onFavoriteButtonClick"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#FFFFFF"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:background="@drawable/round_red_shape"
+                    android:id="@+id/my_uplode_favorites_count_view"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerHorizontal="true">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:background="#ffffff"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/commentsButton"
+                    android:onClick="onCommentsButtonClick"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/chat"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#FFFFFF"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:background="@drawable/round_red_shape"
+                    android:id="@+id/my_uplode_comment_count_view"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:background="#ffffff"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
+            </RelativeLayout>
+
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/imageButton4"
+                android:layout_marginLeft="12dp"
+                android:layout_centerHorizontal="true">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:background="#ffffff"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/up_vote"
+                    android:background="@drawable/vote_up"
+                    android:layout_centerInParent="true"
+                    android:onClick="onVoteUpButtonClick"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#FFFFFF"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:background="@drawable/round_red_shape"
+                    android:id="@+id/my_uplode_score_view"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:background="#ffffff"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
+            </RelativeLayout>
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/imageButton4"
+                android:layout_marginLeft="12dp"
+                android:layout_centerHorizontal="true">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:background="#ffffff"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageButton6"
+                    android:background="@drawable/share"
+                    android:layout_centerInParent="true"
+                    android:onClick="onShareButtonClick"/>
+            </RelativeLayout>
+
+            <!--<ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageButton4"
@@ -95,45 +243,9 @@
                 android:onClick="onShareButtonClick"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@+id/imageButton4"
-                android:layout_marginLeft="12dp"/>
+                android:layout_marginLeft="12dp"/>-->
         </LinearLayout>
     </RelativeLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="93"
-        android:textColor="#FFFFFF"
-        android:padding="10dp"
-        android:background="@drawable/round_red_shape"
-        android:id="@+id/my_uplode_score_view"
-        android:layout_above="@+id/menu_bar"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="93"
-        android:textColor="#FFFFFF"
-        android:padding="10dp"
-        android:background="@drawable/round_red_shape"
-        android:id="@+id/my_uplode_comment_count_view"
-        android:layout_above="@+id/menu_bar"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="93"
-        android:textColor="#FFFFFF"
-        android:padding="10dp"
-        android:background="@drawable/round_red_shape"
-        android:id="@+id/my_uplode_favorites_count_view"
-        android:layout_above="@+id/menu_bar"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"

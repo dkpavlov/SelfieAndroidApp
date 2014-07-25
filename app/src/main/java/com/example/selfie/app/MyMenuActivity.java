@@ -123,7 +123,7 @@ public abstract class MyMenuActivity extends Activity implements MenuFragment.On
                 intent = new Intent(this, FavoriteActivity.class);
                 break;
             case R.id.my_profile:
-                intent = new Intent(this, MyProfileActivity.class);
+                intent = new Intent(this, MyUploadsActivity.class);
                 break;
         }
         startActivity(intent);

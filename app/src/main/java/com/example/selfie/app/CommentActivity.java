@@ -67,6 +67,10 @@ public class CommentActivity extends MyMenuActivity {
         commentAdapter = new CommentAdapter(null, this);
         commentList.setAdapter(commentAdapter);
 
+        View v = findViewById(R.id.empty_comments_list)
+
+        commentList.setEmptyView(v);
+
         new GetComments(commentAdapter)
                 .execute(GalleryActivity.WEB_SERVICE, currentSelfieId);
     }

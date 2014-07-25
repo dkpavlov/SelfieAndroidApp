@@ -211,6 +211,16 @@
         android:layout_alignParentEnd="true" />
 
     <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_camera"
+        android:background="@drawable/start_camera"
+        android:onClick="onCameraClick"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/menu_background"
@@ -245,8 +255,7 @@
         android:layout_height="fill_parent"
         android:id="@+id/hints"
         android:scaleType="fitXY"
-        android:background="#000000"
-        android:alpha=".6"
+        android:background="#C5111111"
         android:src="@drawable/hints"
         android:onClick="onHintClick"
         android:visibility="gone"

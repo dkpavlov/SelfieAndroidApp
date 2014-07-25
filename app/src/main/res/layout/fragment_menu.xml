@@ -81,7 +81,7 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="35dp"
-            android:text="@string/my_profile"
+            android:text="My photos"
             android:textSize="16dp"
             android:background="@null"
             android:id="@+id/my_profile"

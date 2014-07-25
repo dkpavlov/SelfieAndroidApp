@@ -20,7 +20,7 @@
         android:layout_below="@+id/menu_bar"
         android:stretchMode="columnWidth" />
 
-    <ImageButton
+    <!--<ImageButton
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/menu_background_my_uploads"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_menu"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"/>-->
 
     <RelativeLayout
         android:orientation="vertical"
@@ -62,13 +62,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/menu_button"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/menu_trans"
+            android:src="@drawable/start_camera"
             android:background="@null"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="15dp"
             android:layout_alignParentEnd="true"
-            android:onClick="onMenuButtonClick"/>
+            android:onClick="onCameraClickMyUploads"/>
 
         <TextView
             android:layout_width="wrap_content"

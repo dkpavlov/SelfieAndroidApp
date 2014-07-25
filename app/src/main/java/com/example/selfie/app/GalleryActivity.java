@@ -131,6 +131,7 @@ public class GalleryActivity extends MyMenuActivity{
                 inList = true;
                 nextId = imageIdFromList(dir);
                 if(nextId != null){
+                    currentPictureId.replace(0, currentPictureId.length(), nextId);
                     new ImageLoader(imageView, scoreTextView, commentCountView, favoriteCountView,
                                     progressBar, sHeight, sWidth)
                             .execute(WEB_SERVICE, nextId);
@@ -145,6 +146,7 @@ public class GalleryActivity extends MyMenuActivity{
                 }
                 if(inList){
                     nextId = imageIdFromList(1);
+                    currentPictureId.replace(0, currentPictureId.length(), nextId);
                     new ImageLoader(imageView, scoreTextView, commentCountView, favoriteCountView,
                                     progressBar, sHeight, sWidth)
                             .execute(WEB_SERVICE, nextId);
@@ -202,6 +204,11 @@ public class GalleryActivity extends MyMenuActivity{
         preferencesManager.setPreferences(MyPreferencesManager.GALLERY_HINTS, "false");
     }
 
+    public void onCameraClick(View v){
+        Intent intent = new Intent(this, UploadActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onResume() {
         dataSource.open();
@@ -225,5 +232,4 @@ public class GalleryActivity extends MyMenuActivity{
         currentIndexInList = nextCursor;
         return oldIds.get(nextCursor);
     }
-
 }
