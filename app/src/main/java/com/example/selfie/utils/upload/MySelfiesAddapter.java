@@ -53,6 +53,7 @@ public class MySelfiesAddapter extends BaseAdapter{
         for(MySelfie s: mySelfiesList){
             if(s.getSelfieId().equals(selfieId)){
                 mySelfiesList.remove(s);
+                break;
             }
         }
     }

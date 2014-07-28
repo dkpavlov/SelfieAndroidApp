@@ -48,9 +48,12 @@ public class FavoriteActivity extends MyMenuActivity {
         transaction.commit();
         setFragmentButtonTest();
 
+        View emptyView = findViewById(R.id.empty_favorite_list);
+
         List<Selfie> selfieList = dataSource.getAllSelfis();
         gridView = (GridView) findViewById(R.id.favorite_grid_view);
         gridView.setAdapter(new ImageAdapter(selfieList, this, dataSource));
+        gridView.setEmptyView(emptyView);
     }
 
     public void backFavorite(View v){

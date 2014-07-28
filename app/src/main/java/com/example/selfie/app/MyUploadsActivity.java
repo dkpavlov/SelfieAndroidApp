@@ -52,10 +52,13 @@ public class MyUploadsActivity extends MyMenuActivity {
         transaction.commit();
         setFragmentButtonTest();*/
 
+        View emptyView = findViewById(R.id.empty_uploads_list);
+
         selfieList = dataSource.getAllMySelfies();
         gridView = (GridView) findViewById(R.id.my_uploads_grid_view);
         mySelfiesAddapter = new MySelfiesAddapter(selfieList, this, dataSource);
         gridView.setAdapter(mySelfiesAddapter);
+        gridView.setEmptyView(emptyView);
     }
 
     public void backMySelfies(View v){

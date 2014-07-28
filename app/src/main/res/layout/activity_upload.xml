@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="140dp"
-        android:layout_height="120dp"
+        android:layout_height="150dp"
         android:layout_below="@+id/menu_bar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
@@ -40,7 +40,7 @@
 
     <RelativeLayout
         android:layout_width="140dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:background="@drawable/rounded_layout_bg"
         android:layout_below="@+id/relativeLayout"
         android:layout_alignRight="@+id/relativeLayout"
@@ -80,14 +80,20 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="I AM"
         android:id="@+id/textView3"
-        android:layout_centerVertical="true"
+        android:layout_above="@+id/space"
         android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New CheckBox"
+        android:id="@+id/checkBox" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="150dp"
         android:layout_height="130dp"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/space"
         android:layout_centerHorizontal="true">
 
         <RelativeLayout
@@ -107,9 +113,10 @@
                 android:id="@+id/woman_gender_image"
                 android:scaleType="centerCrop"
                 android:src="@drawable/woman_small"
-                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp" />
+                android:scaleY="1.4"
+                android:scaleX="1.4"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -120,7 +127,11 @@
                 android:layout_alignTop="@+id/woman_gender_image"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:visibility="invisible"/>
+                android:visibility="invisible"
+                android:layout_below="@+id/woman_gender_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"/>
         </RelativeLayout>
 
         <Space
@@ -148,7 +159,8 @@
                 android:layout_centerInParent="true"
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/men_small"
-                android:layout_marginTop="20dp" />
+                android:scaleY="1.4"
+                android:scaleX="1.4"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -159,7 +171,9 @@
                 android:layout_alignTop="@+id/men_gender_image"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:visibility="invisible"/>
+                android:visibility="invisible"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"/>
         </RelativeLayout>
 
     </LinearLayout>
@@ -170,6 +184,7 @@
         android:text="E-mail verification"
         android:layout_above="@+id/validate_email"
         android:layout_marginBottom="10dp"
+        android:textSize="18dp"
         android:layout_centerInParent="true"
         android:id="@+id/validate_email_text" />
 
@@ -184,7 +199,7 @@
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="UPLOAD PHOTO"
         android:textColor="#FFFFFF"
         android:textSize="16dp"
@@ -193,7 +208,7 @@
         android:id="@+id/send_button"
         android:background="@drawable/round_button_blue"
         android:onClick="onButtonClick"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
@@ -266,7 +281,12 @@
             android:id="@+id/textView" />
     </RelativeLayout>
 
-
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/space" />
 
 
 </RelativeLayout>

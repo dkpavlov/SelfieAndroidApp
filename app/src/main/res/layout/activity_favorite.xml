@@ -23,6 +23,15 @@
         android:layout_below="@+id/menu_bar"
         android:stretchMode="columnWidth" />
 
+    <TextView
+        android:id="@+id/empty_favorite_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:text="There are no pictures to display">
+    </TextView>
+
     <ImageButton
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -81,10 +90,6 @@
             android:textSize="26dp"
             android:layout_centerInParent="true"
             android:id="@+id/textView" />
+
     </RelativeLayout>
-
-
-
-
-
 </RelativeLayout>
