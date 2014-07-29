@@ -35,7 +35,6 @@ public class GalleryActivity extends MyMenuActivity{
     public static final String SELFIE_ID_KAY = "SELFIE_ID";
     public static final String WEB_SERVICE = "http://194.12.246.68/srest";
     public static final String CURRENT_PICTURE_ID = "PICTURE_ID";
-    public static final String PICTURES_ID_LIST_KAY = "PICTURES_ID_LIST";
 
     private boolean menuVisibility = false;
 
@@ -95,18 +94,10 @@ public class GalleryActivity extends MyMenuActivity{
         transaction.commit();
         setFragmentButtonTest();
 
-
-        if(savedInstanceState != null && savedInstanceState.containsKey(CURRENT_PICTURE_ID)){
-            currentPictureId = new StringBuilder(savedInstanceState.getString(CURRENT_PICTURE_ID));
-            new ImageLoader(imageView, scoreTextView, commentCountView, favoriteCountView,
-                            progressBar, sHeight, sWidth)
-                    .execute(WEB_SERVICE, currentPictureId.toString());
-        } else {
-            new InitialImageLoader(currentPictureId, imageView, progressBar,
-                                   scoreTextView, commentCountView, favoriteCountView,
-                                   sHeight, sWidth)
-                    .execute(WEB_SERVICE, GENDER, TYPE, ORDER);
-        }
+        new InitialImageLoader(currentPictureId, imageView, progressBar,
+                               scoreTextView, commentCountView, favoriteCountView,
+                               sHeight, sWidth, this)
+                .execute(WEB_SERVICE, GENDER, TYPE, ORDER);
     }
 
     @Override
@@ -124,13 +115,13 @@ public class GalleryActivity extends MyMenuActivity{
                 }
                 new NextImageLoader(imageView, currentPictureId,
                                     scoreTextView, commentCountView, favoriteCountView,
-                                    progressBar, sHeight, sWidth)
+                                    progressBar, sHeight, sWidth, this)
                         .execute(WEB_SERVICE, currentPictureId.toString(), GENDER, TYPE, "UP", ORDER);
             } else {
                 currentIndexInList++;
                 currentPictureId = new StringBuilder(oldIds.get(currentIndexInList));
                 new ImageLoader(imageView, scoreTextView, commentCountView, favoriteCountView,
-                        progressBar, sHeight, sWidth)
+                        progressBar, sHeight, sWidth, this)
                         .execute(WEB_SERVICE, currentPictureId.toString());
             }
         } else {
@@ -141,7 +132,7 @@ public class GalleryActivity extends MyMenuActivity{
             } else {
                 currentPictureId = new StringBuilder(oldIds.get(currentIndexInList));
                 new ImageLoader(imageView, scoreTextView, commentCountView, favoriteCountView,
-                        progressBar, sHeight, sWidth)
+                        progressBar, sHeight, sWidth, this)
                         .execute(WEB_SERVICE, currentPictureId.toString());
             }
         }
@@ -163,57 +154,6 @@ public class GalleryActivity extends MyMenuActivity{
                 break;
         }
         loadNextImage(direction);
-        /*
-        String direction = null;
-        int viewId = v.getId();
-        String nextId = null;
-        switch (viewId){
-            case R.id.back :
-                int dir = -1;
-                if(!inList){
-                    oldIds.add(currentPictureId.toString());
-                    currentIndexInList++;
-                    dir = -2;
-                }
-                inList = true;
-                nextId = imageIdFromList(dir);
-                if(nextId != null){
-                    currentPictureId.replace(0, currentPictureId.length(), nextId);
-                    new ImageLoader(imageView, scoreTextView, commentCountView, favoriteCountView,
-                                    progressBar, sHeight, sWidth)
-                            .execute(WEB_SERVICE, nextId);
-                } else {
-                    progressBar.setVisibility(View.GONE);
-                    currentIndexInList--;
-                }
-                break;
-            case R.id.flowers :
-                if((currentIndexInList + 1) == (oldIds.size())){
-                    inList = false;
-                    currentIndexInList++;
-                }
-                if(inList){
-                    nextId = imageIdFromList(1);
-                    if(nextId == null){
-                        currentPictureId = new StringBuilder(oldIds.get(0));
-                    } else {
-                        currentPictureId = new StringBuilder(nextId);
-                    }
-                    new ImageLoader(imageView, scoreTextView, commentCountView, favoriteCountView,
-                                    progressBar, sHeight, sWidth)
-                            .execute(WEB_SERVICE, nextId);
-                } else {
-                    String picId = currentPictureId.toString();
-                    if(oldIds.isEmpty() || !oldIds.get(oldIds.size() - 1).equals(picId)){
-                        oldIds.add(picId);
-                        currentIndexInList++;
-                    }
-                    new NextImageLoader(imageView, currentPictureId, scoreTextView, commentCountView, favoriteCountView,
-                                        progressBar, sHeight, sWidth)
-                            .execute(WEB_SERVICE, picId, GENDER, TYPE, "UP", ORDER);
-                }
-                break;
-        }*/
     }
 
     public void onCommentsButtonClick(View v){
@@ -284,6 +224,4 @@ public class GalleryActivity extends MyMenuActivity{
         currentIndexInList = nextCursor;
         return oldIds.get(nextCursor);
     }
-
-
 }

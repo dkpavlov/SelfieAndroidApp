@@ -1,5 +1,7 @@
 package com.example.selfie.utils.gallery;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.selfie.utils.BitmapAndString;
 import com.example.selfie.utils.Order;
+import com.example.selfie.utils.Utils;
 import com.example.selfie.utils.http.MyHttpClient;
 
 import java.io.IOException;
@@ -25,12 +28,13 @@ public class InitialImageLoader extends AsyncTask<String, Void, BitmapAndString>
     TextView commentCountView;
     TextView favoriteCountView;
     ProgressBar progressBar;
+    Context context;
 
     int sHeight, sWidth;
 
     public InitialImageLoader(StringBuilder pictureId, ImageView imageView, ProgressBar progressBar,
                               TextView scoreTextView, TextView commentCountView, TextView favoriteCountView,
-                              int sHeight, int sWidth) {
+                              int sHeight, int sWidth, Context context) {
         this.pictureId = pictureId;
         this.imageView = imageView;
         this.scoreTextView = scoreTextView;
@@ -39,6 +43,7 @@ public class InitialImageLoader extends AsyncTask<String, Void, BitmapAndString>
         this.sWidth = sWidth;
         this.commentCountView = commentCountView;
         this.favoriteCountView = favoriteCountView;
+        this.context = context;
     }
 
     protected BitmapAndString doInBackground(String... args) {
@@ -74,11 +79,9 @@ public class InitialImageLoader extends AsyncTask<String, Void, BitmapAndString>
             scoreTextView.setText(result.getScore());
             commentCountView.setText(result.getCommentCount());
             favoriteCountView.setText(result.getFavoriteCount());
+        } else {
+            Utils.startHomeActivityWithToast(context);
         }
         progressBar.setVisibility(View.GONE);
     }
-
-
-
-
 }

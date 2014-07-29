@@ -28,7 +28,6 @@ import java.io.IOException;
 
 public class PreviewMyUploadActivity extends Activity {
 
-
     ImageView imageView;
     TextView scoreView, commentView, favoriteView;
     ProgressBar progressBar;
@@ -57,7 +56,7 @@ public class PreviewMyUploadActivity extends Activity {
 
         dataSource = new SelfieDataSource(this);
 
-        new ImageLoader(imageView, scoreView, commentView, favoriteView, progressBar, sHeight, sWidth)
+        new ImageLoader(imageView, scoreView, commentView, favoriteView, progressBar, sHeight, sWidth, this)
                 .execute(GalleryActivity.WEB_SERVICE, id);
     }
 

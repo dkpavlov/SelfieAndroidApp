@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.selfie.utils.MyAccountManager;
 import com.example.selfie.utils.MyPreferencesManager;
 import com.example.selfie.utils.Order;
+import com.example.selfie.utils.Utils;
 import com.example.selfie.utils.http.MyHttpClient;
 
 public class HomeActivity extends Activity {
@@ -41,6 +42,10 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         preferencesManager = new MyPreferencesManager(this);
+        Intent intent = getIntent();
+        if(intent.getBooleanExtra(Utils.SERVER_EXCEPTION_KAY, false)){
+            Toast.makeText(this, "Connection with server was lost, place try again later", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void onButtonClick(View v){

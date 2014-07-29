@@ -218,4 +218,16 @@ public class MyHttpClient  {
         Bitmap bitmap = ScaleBitmap.scale(sWidth, sHeight, BitmapFactory.decodeStream(urlConnection.getInputStream()));
         return new BitmapAndString(bitmap, newPictureId, score, commentCount, favoriteCount);
     }
+
+    public static boolean isConnectedToServer(String url, int timeout) {
+        try{
+            URL myUrl = new URL(url);
+            URLConnection connection = myUrl.openConnection();
+            connection.setConnectTimeout(timeout);
+            connection.connect();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.selfie.utils.gallery;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.selfie.utils.BitmapAndString;
 import com.example.selfie.utils.Order;
+import com.example.selfie.utils.Utils;
 import com.example.selfie.utils.http.MyHttpClient;
 
 /**
@@ -23,10 +25,11 @@ public class NextImageLoader extends AsyncTask<String, Void, BitmapAndString> {
     TextView scoreTextView, commentCountView, favoriteCountView;
     ProgressBar progressBar;
     int sHeight, sWidth;
+    Context context;
 
     public NextImageLoader(ImageView bmImage, StringBuilder pictureId,
                            TextView scoreTextView, TextView commentCountView, TextView favoriteCountView,
-                           ProgressBar progressBar, int sHeight, int sWidth) {
+                           ProgressBar progressBar, int sHeight, int sWidth, Context context) {
         this.pictureId = pictureId;
         this.bmImage = bmImage;
         this.scoreTextView = scoreTextView;
@@ -35,6 +38,7 @@ public class NextImageLoader extends AsyncTask<String, Void, BitmapAndString> {
         this.progressBar = progressBar;
         this.sHeight = sHeight;
         this.sWidth = sWidth;
+        this.context = context;
     }
 
     protected BitmapAndString doInBackground(String... args) {
@@ -57,11 +61,15 @@ public class NextImageLoader extends AsyncTask<String, Void, BitmapAndString> {
     }
 
     protected void onPostExecute(BitmapAndString result) {
-        pictureId.replace(0, pictureId.length(), result.getStr());
-        bmImage.setImageBitmap(result.getBitmap());
-        progressBar.setVisibility(View.GONE);
-        scoreTextView.setText(result.getScore());
-        commentCountView.setText(result.getCommentCount());
-        favoriteCountView.setText(result.getFavoriteCount());
+        if(result != null){
+            pictureId.replace(0, pictureId.length(), result.getStr());
+            bmImage.setImageBitmap(result.getBitmap());
+            progressBar.setVisibility(View.GONE);
+            scoreTextView.setText(result.getScore());
+            commentCountView.setText(result.getCommentCount());
+            favoriteCountView.setText(result.getFavoriteCount());
+        } else {
+            Utils.startHomeActivityWithToast(context);
+        }
     }
 }

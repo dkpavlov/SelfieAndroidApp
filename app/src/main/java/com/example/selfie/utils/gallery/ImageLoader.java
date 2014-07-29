@@ -1,5 +1,6 @@
 package com.example.selfie.utils.gallery;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -10,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.selfie.utils.BitmapAndString;
+import com.example.selfie.utils.Utils;
 import com.example.selfie.utils.http.MyHttpClient;
 import com.example.selfie.utils.ui.ScaleBitmap;
 
@@ -28,12 +30,13 @@ public class ImageLoader extends AsyncTask<String, Void, BitmapAndString> {
     ImageView imageView;
     TextView textView, commentCountView, favoriteCountView;
     ProgressBar progressBar;
+    Context context;
 
     int sWidth, sHeight;
 
     public ImageLoader(ImageView imageView,
                        TextView textView, TextView commentCountView, TextView favoriteCountView,
-                       ProgressBar progressBar, int sHeight, int sWidth) {
+                       ProgressBar progressBar, int sHeight, int sWidth, Context context) {
         this.imageView = imageView;
         this.textView = textView;
         this.commentCountView = commentCountView;
@@ -41,6 +44,7 @@ public class ImageLoader extends AsyncTask<String, Void, BitmapAndString> {
         this.progressBar = progressBar;
         this.sHeight = sHeight;
         this.sWidth = sWidth;
+        this.context = context;
     }
 
     @Override
@@ -71,6 +75,8 @@ public class ImageLoader extends AsyncTask<String, Void, BitmapAndString> {
             favoriteCountView.setText(result.getFavoriteCount());
             imageView.setImageBitmap(result.getBitmap());
             progressBar.setVisibility(View.GONE);
+        } else {
+            Utils.startHomeActivityWithToast(context);
         }
     }
 }

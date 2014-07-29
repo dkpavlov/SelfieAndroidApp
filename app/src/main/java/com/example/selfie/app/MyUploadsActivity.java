@@ -39,19 +39,6 @@ public class MyUploadsActivity extends MyMenuActivity {
         dataSource = new SelfieDataSource(this);
         dataSource.open();
 
-        /*background = (ImageButton) findViewById(R.id.menu_background_my_uploads);
-
-        GENDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_GENDER, "FEMALE");
-        TYPE = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_TYPE, "SFW");
-        ORDER = preferencesManager.getPreferences(MyPreferencesManager.SELFIE_ORDER, Order.RANDOMIZED.toString());
-
-        fragmentManager = getFragmentManager();
-        menuFragment = (MenuFragment) fragmentManager.findFragmentById(R.id.menu_fragment_my_uploads);
-        transaction = fragmentManager.beginTransaction();
-        transaction.hide(menuFragment);
-        transaction.commit();
-        setFragmentButtonTest();*/
-
         View emptyView = findViewById(R.id.empty_uploads_list);
 
         selfieList = dataSource.getAllMySelfies();
@@ -68,9 +55,6 @@ public class MyUploadsActivity extends MyMenuActivity {
     @Override
     protected void onResume() {
         dataSource.open();
-        /*transaction = fragmentManager.beginTransaction();
-        transaction.hide(menuFragment).commit();
-        menuVisibility = false;*/
         super.onResume();
     }
 

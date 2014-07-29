@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.selfie.app.fragments.MenuFragment;
 import com.example.selfie.utils.MyPreferencesManager;
 import com.example.selfie.utils.Order;
+import com.example.selfie.utils.Utils;
 import com.example.selfie.utils.data.SelfieDataSource;
 import com.example.selfie.utils.file.FileUtil;
 import com.example.selfie.utils.profile.PostSelfie;
@@ -92,9 +93,7 @@ public class UploadActivity extends MyMenuActivity {
                 openImageIntent();
                 break;
             case R.id.send_button:
-
-
-                if(selectedImageUri == null || gender.equals("") || !isValidEmailAddress(emailValidation.getText().toString())){
+                if(selectedImageUri == null || gender.equals("") || !Utils.isValidEmailAddress(emailValidation.getText().toString())){
                     Toast.makeText(getApplicationContext(), "Place select picture, gender and provide valid email", Toast.LENGTH_LONG).show();
                 } else {
                     progressBar.setVisibility(View.VISIBLE);
@@ -223,14 +222,5 @@ public class UploadActivity extends MyMenuActivity {
         super.onPause();
     }
 
-    public static boolean isValidEmailAddress(String email) {
-        boolean result = true;
-        String emailRegEx = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-        try {
-            result = email.matches(emailRegEx);
-        } catch (Exception ex) {
-            result = false;
-        }
-        return result;
-    }
+
 }
