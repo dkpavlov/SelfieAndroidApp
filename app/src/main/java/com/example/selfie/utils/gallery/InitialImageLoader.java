@@ -68,11 +68,13 @@ public class InitialImageLoader extends AsyncTask<String, Void, BitmapAndString>
     }
 
     protected void onPostExecute(BitmapAndString result) {
-        pictureId.replace(0, pictureId.length(), result.getStr());
-        imageView.setImageBitmap(result.getBitmap());
-        scoreTextView.setText(result.getScore());
-        commentCountView.setText(result.getCommentCount());
-        favoriteCountView.setText(result.getFavoriteCount());
+        if(result != null){
+            pictureId.replace(0, pictureId.length(), result.getStr());
+            imageView.setImageBitmap(result.getBitmap());
+            scoreTextView.setText(result.getScore());
+            commentCountView.setText(result.getCommentCount());
+            favoriteCountView.setText(result.getFavoriteCount());
+        }
         progressBar.setVisibility(View.GONE);
     }
 

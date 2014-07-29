@@ -115,8 +115,55 @@ public class GalleryActivity extends MyMenuActivity{
         icicle.putString(CURRENT_PICTURE_ID, currentPictureId.toString());
     }
 
+    private void loadNextImage(int direction){
+        if(direction == 1){
+            if(!inList){
+                if(oldIds.isEmpty() || !currentPictureId.toString().equals(oldIds.get(oldIds.size() - 1))){
+                    oldIds.add(currentPictureId.toString());
+                    currentIndexInList++;
+                }
+                new NextImageLoader(imageView, currentPictureId,
+                                    scoreTextView, commentCountView, favoriteCountView,
+                                    progressBar, sHeight, sWidth)
+                        .execute(WEB_SERVICE, currentPictureId.toString(), GENDER, TYPE, "UP", ORDER);
+            } else {
+                currentIndexInList++;
+                currentPictureId = new StringBuilder(oldIds.get(currentIndexInList));
+                new ImageLoader(imageView, scoreTextView, commentCountView, favoriteCountView,
+                        progressBar, sHeight, sWidth)
+                        .execute(WEB_SERVICE, currentPictureId.toString());
+            }
+        } else {
+            currentIndexInList--;
+            if(currentIndexInList < 0){
+                currentIndexInList = 0;
+                progressBar.setVisibility(View.GONE);
+            } else {
+                currentPictureId = new StringBuilder(oldIds.get(currentIndexInList));
+                new ImageLoader(imageView, scoreTextView, commentCountView, favoriteCountView,
+                        progressBar, sHeight, sWidth)
+                        .execute(WEB_SERVICE, currentPictureId.toString());
+            }
+        }
+    }
+
     public void onArrowClick(View v){
         progressBar.setVisibility(View.VISIBLE);
+        int direction = 0;
+        switch (v.getId()){
+            case R.id.back:
+                direction = -1;
+                inList = true;
+                break;
+            case R.id.flowers:
+                direction = 1;
+                if(currentIndexInList >= (oldIds.size() - 1)){
+                    inList = false;
+                }
+                break;
+        }
+        loadNextImage(direction);
+        /*
         String direction = null;
         int viewId = v.getId();
         String nextId = null;
@@ -137,6 +184,7 @@ public class GalleryActivity extends MyMenuActivity{
                             .execute(WEB_SERVICE, nextId);
                 } else {
                     progressBar.setVisibility(View.GONE);
+                    currentIndexInList--;
                 }
                 break;
             case R.id.flowers :
@@ -146,7 +194,11 @@ public class GalleryActivity extends MyMenuActivity{
                 }
                 if(inList){
                     nextId = imageIdFromList(1);
-                    currentPictureId.replace(0, currentPictureId.length(), nextId);
+                    if(nextId == null){
+                        currentPictureId = new StringBuilder(oldIds.get(0));
+                    } else {
+                        currentPictureId = new StringBuilder(nextId);
+                    }
                     new ImageLoader(imageView, scoreTextView, commentCountView, favoriteCountView,
                                     progressBar, sHeight, sWidth)
                             .execute(WEB_SERVICE, nextId);
@@ -161,7 +213,7 @@ public class GalleryActivity extends MyMenuActivity{
                             .execute(WEB_SERVICE, picId, GENDER, TYPE, "UP", ORDER);
                 }
                 break;
-        }
+        }*/
     }
 
     public void onCommentsButtonClick(View v){
@@ -232,4 +284,6 @@ public class GalleryActivity extends MyMenuActivity{
         currentIndexInList = nextCursor;
         return oldIds.get(nextCursor);
     }
+
+
 }
