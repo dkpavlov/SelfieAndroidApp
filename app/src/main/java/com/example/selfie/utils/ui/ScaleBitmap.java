@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -25,9 +26,7 @@ public class ScaleBitmap {
     }
 
     public static Bitmap decodeBitmapSize(InputStream is, int height, int width) throws IOException{
-        Log.e("Decode Bitmap Size", String.valueOf(System.nanoTime()));
         byte[] bytes = iSToBytes(is);
-        Log.e("Decode Bitmap Size", String.valueOf(System.nanoTime()));
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -60,11 +59,34 @@ public class ScaleBitmap {
         return decodeBitmapSize(is, height, width);
     }
 
+    public static Bitmap decodeStream(InputStream in, int height, int width){
+        try{
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024 * 3];
+            int len;
+            while ((len = in.read(buffer)) > -1 ) {
+                baos.write(buffer, 0, len);
+            }
+            baos.flush();
+            InputStream is1 = new ByteArrayInputStream(baos.toByteArray());
+            InputStream is2 = new ByteArrayInputStream(baos.toByteArray());
+
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(is1,null,o);
+
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize=calculateInSampleSize(o, width, height);
+
+            return BitmapFactory.decodeStream(is2, null, o2);
+        } catch (Exception e){
+            return null;
+        }
+    }
+
     private static int calculateInSampleSize(BitmapFactory.Options options,
                                              int reqWidth,
                                              int reqHeight) {
-        final int height = options.outHeight;
-        final int width = options.outWidth;
         int inSampleSize = 1;
         final int maxSize = reqHeight * reqWidth;
         while ((options.outWidth * options.outHeight) * (1 / Math.pow(inSampleSize, 2)) >
@@ -73,6 +95,7 @@ public class ScaleBitmap {
         }
         return inSampleSize;
     }
+
 
     private static byte[] iSToBytes(InputStream is) throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();

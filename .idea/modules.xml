@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/Selfie.iml" filepath="$PROJECT_DIR$/Selfie.iml" />
       <module fileurl="file://$PROJECT_DIR$/SelfieAndroidApp.iml" filepath="$PROJECT_DIR$/SelfieAndroidApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>
   </component>
 </project>

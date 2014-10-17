@@ -215,8 +215,7 @@ public class MyHttpClient  {
         score = urlConnection.getHeaderField(HEADER_FOR_PICTURE_SCORE);
         commentCount = urlConnection.getHeaderField(HEADER_FOR_PICTURE_COMMENT_COUNT);
         favoriteCount = urlConnection.getHeaderField(HEADER_FOR_PICTURE_FAVORITE_COUNT);
-        Bitmap bitmap = ScaleBitmap.scale(sWidth, sHeight, BitmapFactory.decodeStream(urlConnection.getInputStream()));
-        return new BitmapAndString(bitmap, newPictureId, score, commentCount, favoriteCount);
+        return new BitmapAndString(ScaleBitmap.decodeStream(urlConnection.getInputStream(), sHeight, sWidth), newPictureId, score, commentCount, favoriteCount);
     }
 
     public static boolean isConnectedToServer(String url, int timeout) {

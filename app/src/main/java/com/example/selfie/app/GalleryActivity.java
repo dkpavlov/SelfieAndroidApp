@@ -33,7 +33,7 @@ import java.util.List;
 public class GalleryActivity extends MyMenuActivity{
 
     public static final String SELFIE_ID_KAY = "SELFIE_ID";
-    public static final String WEB_SERVICE = "http://194.12.246.68/srest";
+    public static final String WEB_SERVICE = "http://188.138.101.134:8081/SelfieREST";
     public static final String CURRENT_PICTURE_ID = "PICTURE_ID";
 
     private boolean menuVisibility = false;
